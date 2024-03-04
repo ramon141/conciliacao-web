@@ -34,11 +34,11 @@ function Billing() {
             gap='26px'>
             <CreditCard
               backgroundImage={BackgroundCard1}
-              title={"Purity UI"}
-              number={"7812 2139 0823 XXXX"}
+              title={""}
+              number={"Ramon Barbosa Pessoa"}
               validity={{
-                name: "VALID THRU",
-                data: "05/24",
+                name: "Cadastrado em",
+                data: "10/10/2024",
               }}
               cvv={{
                 name: "CVV",
@@ -78,10 +78,8 @@ function Billing() {
             }}
           />
         </Box>
-        <Invoices title={"Invoices"} data={invoicesData} />
       </Grid>
       <Grid templateColumns={{ sm: "1fr", lg: "1.6fr 1.2fr" }}>
-        <BillingInformation title={"Billing Information"} data={billingData} />
         <Transactions
           title={"Your Transactions"}
           date={"23 - 30 March"}

@@ -116,43 +116,6 @@ const Header = ({
                 </Text>
               </Flex>
             </Button>
-            <Button p='0px' bg='transparent' _hover={{ bg: "none" }}>
-              <Flex
-                align='center'
-                w={{ lg: "135px" }}
-                borderRadius='15px'
-                justifyContent='center'
-                py='10px'
-                mx={{ lg: "1rem" }}
-                cursor='pointer'>
-                {tabs[1].icon}
-                <Text
-                  fontSize='xs'
-                  color={textColor}
-                  fontWeight='bold'
-                  ms='6px'>
-                  {tabs[1].name}
-                </Text>
-              </Flex>
-            </Button>
-            <Button p='0px' bg='transparent' _hover={{ bg: "none" }}>
-              <Flex
-                align='center'
-                w={{ lg: "135px" }}
-                borderRadius='15px'
-                justifyContent='center'
-                py='10px'
-                cursor='pointer'>
-                {tabs[2].icon}
-                <Text
-                  fontSize='xs'
-                  color={textColor}
-                  fontWeight='bold'
-                  ms='6px'>
-                  {tabs[2].name}
-                </Text>
-              </Flex>
-            </Button>
           </Flex>
         </Flex>
       </Box>

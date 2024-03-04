@@ -5,21 +5,16 @@ import Authors from "./components/Authors";
 import Projects from "./components/Projects";
 import { tablesTableData, dashboardTableData } from "variables/general";
 
-function Tables() {
+function Enterprise() {
   return (
     <Flex direction='column' pt={{ base: "120px", md: "75px" }}>
       <Authors
-        title={"Authors Table"}
-        captions={["Author", "Function", "Status", "Employed", ""]}
+        title={"Empresa"}
+        captions={["NOME", "TOTAL DE CORRIDAS", "SALDO", "CRIADO EM", "REGISTRAR TRANSAÇÃO", "ENVIAR MENSAGEM"]}
         data={tablesTableData}
-      />
-      <Projects
-        title={"Projects Table"}
-        captions={["Companies", "Budget", "Status", "Completion", ""]}
-        data={dashboardTableData}
       />
     </Flex>
   );
 }
 
-export default Tables;
+export default Enterprise;

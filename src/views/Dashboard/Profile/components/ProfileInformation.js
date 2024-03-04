@@ -1,5 +1,5 @@
 // Chakra imports
-import { Flex, Icon, Link, Text, useColorModeValue } from "@chakra-ui/react";
+import { Button, Flex, FormControl, FormLabel, Icon, Input, Link, Text, useColorModeValue } from "@chakra-ui/react";
 // Custom components
 import Card from "components/Card/Card";
 import CardBody from "components/Card/CardBody";
@@ -26,74 +26,60 @@ const ProfileInformation = ({
         </Text>
       </CardHeader>
       <CardBody px='5px'>
-        <Flex direction='column'>
-          <Text fontSize='md' color='gray.500' fontWeight='400' mb='30px'>
-            {description}
-          </Text>
-          <Flex align='center' mb='18px'>
-            <Text fontSize='md' color={textColor} fontWeight='bold' me='10px'>
-              Full Name:{" "}
-            </Text>
-            <Text fontSize='md' color='gray.500' fontWeight='400'>
-              {name}
-            </Text>
-          </Flex>
-          <Flex align='center' mb='18px'>
-            <Text fontSize='md' color={textColor} fontWeight='bold' me='10px'>
-              Mobile:{" "}
-            </Text>
-            <Text fontSize='md' color='gray.500' fontWeight='400'>
-              {mobile}
-            </Text>
-          </Flex>
-          <Flex align='center' mb='18px'>
-            <Text fontSize='md' color={textColor} fontWeight='bold' me='10px'>
-              Email:{" "}
-            </Text>
-            <Text fontSize='md' color='gray.500' fontWeight='400'>
-              {email}
-            </Text>
-          </Flex>
-          <Flex align='center' mb='18px'>
-            <Text fontSize='md' color={textColor} fontWeight='bold' me='10px'>
-              Location:{" "}
-            </Text>
-            <Text fontSize='md' color='gray.500' fontWeight='400'>
-              {location}
-            </Text>
-          </Flex>
-          <Flex align='center' mb='18px'>
-            <Text fontSize='md' color={textColor} fontWeight='bold' me='10px'>
-              Social Media:{" "}
-            </Text>
-            <Flex>
-              <Link
-                href='#'
-                color='teal.300'
-                fontSize='lg'
-                me='10px'
-                _hover={{ color: "teal.300" }}>
-                <Icon as={FaFacebook} />
-              </Link>
-              <Link
-                href='#'
-                color='teal.300'
-                fontSize='lg'
-                me='10px'
-                _hover={{ color: "teal.300" }}>
-                <Icon as={FaInstagram} />
-              </Link>
-              <Link
-                href='#'
-                color='teal.300'
-                fontSize='lg'
-                me='10px'
-                _hover={{ color: "teal.300" }}>
-                <Icon as={FaTwitter} />
-              </Link>
-            </Flex>
-          </Flex>
-        </Flex>
+        <FormControl>
+          <FormLabel ms='4px' fontSize='sm' fontWeight='normal'>
+            E-mail
+          </FormLabel>
+          <Input
+            fontSize='sm'
+            ms='4px'
+            borderRadius='15px'
+            type='email'
+            placeholder='exemplo@gmail.com'
+            mb='24px'
+            size='lg'
+          />
+          <FormLabel ms='4px' fontSize='sm' fontWeight='normal'>
+            Telefone
+          </FormLabel>
+          <Input
+            fontSize='sm'
+            ms='4px'
+            borderRadius='15px'
+            type='text'
+            placeholder='(99) 99999-9999'
+            mb='24px'
+          />
+          <FormLabel ms='4px' fontSize='sm' fontWeight='normal'>
+            Senha
+          </FormLabel>
+          <Input
+            fontSize='sm'
+            ms='4px'
+            borderRadius='15px'
+            type='password'
+            placeholder='********'
+            mb='24px'
+            size='lg'
+          />
+          <Button
+            type='submit'
+            bg='teal.300'
+            fontSize='10px'
+            color='white'
+            fontWeight='bold'
+            w='100%'
+            h='45'
+            mb='24px'
+            _hover={{
+              bg: "teal.200",
+            }}
+            _active={{
+              bg: "teal.400",
+            }}>
+            EDITAR
+          </Button>
+        </FormControl>
       </CardBody>
     </Card>
   );

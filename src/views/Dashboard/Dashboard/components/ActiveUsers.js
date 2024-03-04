@@ -25,31 +25,22 @@ const ActiveUsers = ({ title, percentage, chart }) => {
             <Text fontSize='lg' color={textColor} fontWeight='bold' mb='6px'>
               {title}
             </Text>
-            <Text fontSize='md' fontWeight='medium' color='gray.400'>
-              <Text
-                as='span'
-                color={percentage > 0 ? "green.400" : "red.400"}
-                fontWeight='bold'>
-                {percentage > 0 ? `+${percentage}%` : `-${percentage}%`}
-              </Text>{" "}
-              than last week
-            </Text>
           </Flex>
           <SimpleGrid gap={{ sm: "12px" }} columns={4}>
             <ChartStatistics
-              title={"Users"}
+              title={"Em caixa"}
               amount={"32,984"}
               percentage={20}
               icon={<WalletIcon h={"15px"} w={"15px"} color={iconBoxInside} />}
             />
             <ChartStatistics
-              title={"Clicks"}
+              title={"Gasto no mês"}
               amount={"2.42m"}
               percentage={80}
               icon={<RocketIcon h={"15px"} w={"15px"} color={iconBoxInside} />}
             />
             <ChartStatistics
-              title={"Sales"}
+              title={"Ganhos no mês"}
               amount={"2,400$"}
               percentage={30}
               icon={<CartIcon h={"15px"} w={"15px"} color={iconBoxInside} />}

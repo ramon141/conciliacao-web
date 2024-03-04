@@ -484,6 +484,43 @@ export const StatsIcon = createIcon({
   ),
 });
 
+export const CarIcon = createIcon({
+  displayName: "CarIcon",
+  viewBox: "0 0 24 24",
+  path: (
+    <path
+      fill="currentColor"
+      d="m5 11l1.5-4.5h11L19 11m-1.5 5a1.5 1.5 0 0 1-1.5-1.5a1.5 1.5 0 0 1 1.5-1.5a1.5 1.5 0 0 1 1.5 1.5a1.5 1.5 0 0 1-1.5 1.5m-11 0A1.5 1.5 0 0 1 5 14.5A1.5 1.5 0 0 1 6.5 13A1.5 1.5 0 0 1 8 14.5A1.5 1.5 0 0 1 6.5 16M18.92 6c-.2-.58-.76-1-1.42-1h-11c-.66 0-1.22.42-1.42 1L3 12v8a1 1 0 0 0 1 1h1a1 1 0 0 0 1-1v-1h12v1a1 1 0 0 0 1 1h1a1 1 0 0 0 1-1v-8z"
+    />
+
+  ),
+});
+
+export const EnterpriseIcon = createIcon({
+  displayName: "EnterpriseIcon",
+  viewBox: "0 0 32 32",
+  path: (
+    <g clipPath="url(#clip0)">
+      <path
+        fill="currentColor"
+        d="M8 8h2v4H8zm0 6h2v4H8zm6-6h2v4h-2zm0 6h2v4h-2zm-6 6h2v4H8zm6 0h2v4h-2z"
+      />
+      <path
+        fill="currentColor"
+        d="M30 14a2 2 0 0 0-2-2h-6V4a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2v26h28ZM4 4h16v24H4Zm18 24V14h6v14Z"
+      />
+    </g>
+  ),
+});
+
+export const MessageIcon = createIcon({
+  displayName: "EnterpriseIcon",
+  viewBox: "0 0 24 24",
+  path: (
+    <path fill="currentColor" d="M3 20v-6l8-2l-8-2V4l19 8z" />
+  ),
+});
+
 export const WalletIcon = createIcon({
   displayName: "WalletIcon",
   viewBox: "0 0 24 24",
