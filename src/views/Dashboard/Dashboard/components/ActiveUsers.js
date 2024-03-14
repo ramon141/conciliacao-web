@@ -12,8 +12,9 @@ import {
 } from "components/Icons/Icons.js";
 import React from "react";
 import ChartStatistics from "./ChartStatistics";
+import {formatNumberToMoney} from "../../../../utils/formatNumberToMoney";
 
-const ActiveUsers = ({ title, percentage, chart }) => {
+const ActiveUsers = ({ title, data, chart }) => {
   const iconBoxInside = useColorModeValue("white", "white");
   const textColor = useColorModeValue("gray.700", "white");
   return (
@@ -29,26 +30,22 @@ const ActiveUsers = ({ title, percentage, chart }) => {
           <SimpleGrid gap={{ sm: "12px" }} columns={4}>
             <ChartStatistics
               title={"Em caixa"}
-              amount={"32,984"}
-              percentage={20}
+              amount={formatNumberToMoney(data.inCash, false)}
               icon={<WalletIcon h={"15px"} w={"15px"} color={iconBoxInside} />}
             />
             <ChartStatistics
               title={"Gasto no mês"}
-              amount={"2.42m"}
-              percentage={80}
+              amount={formatNumberToMoney(data.inCash, false)}
               icon={<RocketIcon h={"15px"} w={"15px"} color={iconBoxInside} />}
             />
             <ChartStatistics
               title={"Ganhos no mês"}
-              amount={"2,400$"}
-              percentage={30}
+              amount={formatNumberToMoney(data.inCash, false)}
               icon={<CartIcon h={"15px"} w={"15px"} color={iconBoxInside} />}
             />
             <ChartStatistics
               title={"Items"}
-              amount={"320"}
-              percentage={40}
+              amount={formatNumberToMoney(data.inCash, false)}
               icon={<StatsIcon h={"15px"} w={"15px"} color={iconBoxInside} />}
             />
           </SimpleGrid>

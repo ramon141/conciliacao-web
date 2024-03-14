@@ -5,7 +5,7 @@ export const barChartData = [
   },
 ];
 
-export const barChartOptions = {
+export const barChartOptions = (categories) => ({
   chart: {
     toolbar: {
       show: false,
@@ -27,7 +27,7 @@ export const barChartOptions = {
     theme: "dark",
   },
   xaxis: {
-    categories: ["Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
+    categories,
     show: false,
     labels: {
       show: false,
@@ -81,7 +81,7 @@ export const barChartOptions = {
       },
     },
   ],
-};
+});
 
 export const lineChartData = [
   {
@@ -94,7 +94,7 @@ export const lineChartData = [
   },
 ];
 
-export const lineChartOptions = {
+export const lineChartOptions = (categories) => ({
   chart: {
     toolbar: {
       show: false,
@@ -111,20 +111,7 @@ export const lineChartOptions = {
   },
   xaxis: {
     type: "datetime",
-    categories: [
-      "Jan",
-      "Feb",
-      "Mar",
-      "Apr",
-      "May",
-      "Jun",
-      "Jul",
-      "Aug",
-      "Sep",
-      "Oct",
-      "Nov",
-      "Dec",
-    ],
+    categories: categories,
     labels: {
       style: {
         colors: "#c8cfca",
@@ -161,4 +148,4 @@ export const lineChartOptions = {
     colors: ["#4FD1C5", "#2D3748"],
   },
   colors: ["#4FD1C5", "#2D3748"],
-};
+});

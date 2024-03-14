@@ -2,7 +2,7 @@ import { Flex, Progress, Text, useColorModeValue } from "@chakra-ui/react";
 import IconBox from "components/Icons/IconBox";
 import React from "react";
 
-const ChartStatistics = ({ title, amount, icon, percentage }) => {
+const ChartStatistics = ({ title, amount, icon }) => {
   const iconTeal = useColorModeValue("teal.300", "teal.300");
   const iconBoxInside = useColorModeValue("white", "white");
   const textColor = useColorModeValue("gray.700", "white");
@@ -20,12 +20,6 @@ const ChartStatistics = ({ title, amount, icon, percentage }) => {
       <Text fontSize='lg' color={textColor} fontWeight='bold' mb='6px' my='6px'>
         {amount}
       </Text>
-      <Progress
-        colorScheme='teal'
-        borderRadius='12px'
-        h='5px'
-        value={percentage}
-      />
     </Flex>
   );
 };

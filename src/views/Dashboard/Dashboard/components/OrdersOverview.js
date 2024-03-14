@@ -24,13 +24,22 @@ const OrdersOverview = ({ title, amount, data }) => {
           {data.map((row, index, arr) => {
             return (
               <TimelineRow
-                key={row.title}
-                logo={row.logo}
-                title={row.title}
-                date={row.date}
-                color={row.color}
-                index={index}
-                arrLength={arr.length}
+                  key={row.id}
+                  title={`${
+                      row.payment_method === 'racer'?
+                          (row.value > 0?
+                              'Você deve pagar referente as corridas da semana' :
+                              'Você deve receber referente as corridas da semana') :
+                          row.type === 'receive' ? 'Recebendo pagamento' : 'Fazendo pagamento'
+                  }`}
+                  type={row.type}
+                  value={row.value}
+                  paymentMethod={row.payment_method}
+                  date={row.date}
+                  driverId={row.driverId}
+                  enterpriseId={row.enterpriseId}
+                  arrLength={data.length}
+                  index={index}
               />
             );
           })}

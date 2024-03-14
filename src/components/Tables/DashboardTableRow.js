@@ -10,9 +10,10 @@ import {
   useColorModeValue,
 } from "@chakra-ui/react";
 import React from "react";
+import moment from "moment";
 
 function DashboardTableRow(props) {
-  const { logo, name, members, budget, progression } = props;
+  const { name, totalRace, balance, createdAt } = props;
   const textColor = useColorModeValue("gray.700", "white");
   return (
     <Tr>
@@ -31,39 +32,19 @@ function DashboardTableRow(props) {
       </Td>
 
       <Td>
-        <AvatarGroup size="sm">
-          {members.map((member) => {
-            return (
-              <Avatar
-                name="Ryan Florence"
-                key={member}
-                src={member}
-                _hover={{ zIndex: "3", cursor: "pointer" }}
-              />
-            );
-          })}
-        </AvatarGroup>
+          <Text fontSize="md" color={textColor} fontWeight="bold" pb=".5rem">
+              {totalRace}
+          </Text>
       </Td>
       <Td>
         <Text fontSize="md" color={textColor} fontWeight="bold" pb=".5rem">
-          {budget}
+          {balance}
         </Text>
       </Td>
       <Td>
-        <Flex direction="column">
-          <Text
-            fontSize="md"
-            color="teal.300"
-            fontWeight="bold"
-            pb=".2rem"
-          >{`${progression}%`}</Text>
-          <Progress
-            colorScheme={progression === 100 ? "teal" : "cyan"}
-            size="xs"
-            value={progression}
-            borderRadius="15px"
-          />
-        </Flex>
+          <Text fontSize="md" color={textColor} fontWeight="bold" pb=".5rem">
+              {moment(createdAt).format('DD/MM/YYYY')}
+          </Text>
       </Td>
     </Tr>
   );

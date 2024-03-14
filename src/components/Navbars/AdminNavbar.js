@@ -11,6 +11,7 @@ import {
 import PropTypes from "prop-types";
 import React, { useState } from "react";
 import AdminNavbarLinks from "./AdminNavbarLinks";
+import {MenuIcon} from "../Icons/Icons";
 
 export default function AdminNavbar(props) {
   const [scrolled, setScrolled] = useState(false);
@@ -116,7 +117,7 @@ export default function AdminNavbar(props) {
           <Breadcrumb>
             <BreadcrumbItem color={mainText}>
               <BreadcrumbLink href="#" color={secondaryText}>
-                Pages
+                Início
               </BreadcrumbLink>
             </BreadcrumbItem>
 
@@ -146,6 +147,15 @@ export default function AdminNavbar(props) {
             {brandText}
           </Link>
         </Box>
+      </Flex>
+
+      <Flex>
+        <AdminNavbarLinks
+            onOpen={props.onOpen}
+            logoText={props.logoText}
+            secondary={props.secondary}
+            fixed={props.fixed}
+        />
       </Flex>
     </Flex>
   );

@@ -1,24 +1,24 @@
 // Chakra imports
-import { Flex, Icon, Text, useColorModeValue } from "@chakra-ui/react";
+import { Box, Flex, FormControl, FormLabel, Icon, Input, Text, useColorModeValue } from "@chakra-ui/react";
 // Custom components
 import Card from "components/Card/Card.js";
 import CardBody from "components/Card/CardBody.js";
 import CardHeader from "components/Card/CardHeader.js";
 import TransactionRow from "components/Tables/TransactionRow";
 import React from "react";
-import { FaRegCalendarAlt } from "react-icons/fa";
+import {FaArrowDown, FaArrowUp, FaRegCalendarAlt} from "react-icons/fa";
 
 const Transactions = ({
   title,
-  date,
-  newestTransactions,
-  olderTransactions,
+  dateStart,
+  dateEnd,
+  transactions
 }) => {
   // Chakra color mode
   const textColor = useColorModeValue("gray.700", "white");
 
   return (
-    <Card my='24px' ms={{ lg: "24px" }}>
+    <Card my='24px'>
       <CardHeader mb='12px'>
         <Flex direction='column' w='100%'>
           <Flex
@@ -33,58 +33,56 @@ const Transactions = ({
               fontWeight='bold'>
               {title}
             </Text>
-            <Flex align='center'>
-              <Icon
-                as={FaRegCalendarAlt}
-                color='gray.400'
-                fontSize='md'
-                me='6px'></Icon>
-              <Text color='gray.400' fontSize='sm' fontWeight='semibold'>
-                {date}
-              </Text>
+
+            <Flex align='center' direction={'column'} textAlign={'center'}>
+              <FormLabel ms='4px' my={{ sm: '10px', md: '0px' }} fontSize='sm' fontWeight='normal' textAlign={'center'}>
+                Prazo
+              </FormLabel>
+
+              <Flex align='center' direction={'row'} textAlign={'center'}>
+                <Input
+                  borderRadius='15px'
+                  fontSize='sm'
+                  type='date'
+                  width={'130px'}
+                  placeholder='Início'
+                  size='sm'
+                />
+                &nbsp;&nbsp;até&nbsp;&nbsp;
+                <Input
+                  borderRadius='15px'
+                  width={'130px'}
+                  fontSize='sm'
+                  type='date'
+                  placeholder='Fim'
+                  size='sm'
+                />
+              </Flex>
             </Flex>
           </Flex>
         </Flex>
       </CardHeader>
       <CardBody>
         <Flex direction='column' w='100%'>
-          <Text
-            color='gray.400'
-            fontSize={{ sm: "sm", md: "md" }}
-            fontWeight='semibold'
-            my='12px'>
-            NEWEST
-          </Text>
-          {newestTransactions.map((row) => {
+          {transactions.map((row) => {
             return (
               <TransactionRow
-                name={row.name}
-                logo={row.logo}
-                date={row.date}
-                price={row.price}
-              />
-            );
-          })}
-          <Text
-            color='gray.400'
-            fontSize={{ sm: "sm", md: "md" }}
-            fontWeight='semibold'
-            my='12px'>
-            OLDER
-          </Text>
-          {olderTransactions.map((row) => {
-            return (
-              <TransactionRow
-                name={row.name}
-                logo={row.logo}
-                date={row.date}
-                price={row.price}
+                name={`${
+                  row.payment_method === 'racer'?
+                      (row.value > 0?
+                        'Você deve pagar referente as corridas da semana' :
+                          'Você deve receber referente as corridas da semana') :
+                      row.type === 'receive' ? 'Recebendo pagamento' : 'Fazendo pagamento'
+                }`}
+                type={row.type}
+                price={row.value}
+                paymentMethod={row.payment_method}
               />
             );
           })}
         </Flex>
       </CardBody>
-    </Card>
+    </Card >
   );
 };
 

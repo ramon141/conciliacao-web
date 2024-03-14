@@ -3,20 +3,18 @@ import Dashboard from "views/Dashboard/Dashboard";
 import Driver from "views/Dashboard/Driver";
 import Billing from "views/Dashboard/Billing";
 import Profile from "views/Dashboard/Profile";
-import SignIn from "views/Auth/SignIn.js";
 import SignUp from "views/Auth/SignUp.js";
 
 import {
   HomeIcon,
-  StatsIcon,
-  CreditIcon,
   PersonIcon,
-  DocumentIcon,
   RocketIcon,
 } from "components/Icons/Icons";
 import Enterprise from "views/Dashboard/Enterprise";
 import { CarIcon } from "components/Icons/Icons";
 import { EnterpriseIcon } from "components/Icons/Icons";
+import Receipt from "views/Dashboard/Receipt";
+import Cash from "./views/Dashboard/Cash";
 
 var dashRoutes = [
   {
@@ -41,10 +39,25 @@ var dashRoutes = [
     layout: "/admin",
   },
   {
-    path: "/transaction",
-    name: "teste",
+    path: "/receipt",
+    name: "Recibos",
+    icon: <EnterpriseIcon color="inherit" />,
+    component: Receipt,
+    layout: "/admin",
+  },
+  {
+    path: "/transaction/:id/:type",
+    name: "Transações",
     icon: <EnterpriseIcon color="inherit" />,
     component: Billing,
+    redirect: true,
+    layout: "/admin",
+  },
+  {
+    path: "/cash",
+    name: "Caixa",
+    icon: <EnterpriseIcon color="inherit" />,
+    component: Cash,
     layout: "/admin",
   },
   {
@@ -53,16 +66,17 @@ var dashRoutes = [
     state: "pageCollapse",
     views: [
       {
-        path: "/profile",
+        path: "/profile/:id/:type",
         name: "Profile",
         icon: <PersonIcon color="inherit" />,
         secondaryNavbar: true,
+        redirect: true,
         component: Profile,
         layout: "/admin",
       },
       {
         path: "/signup",
-        name: "Sign Up",
+        name: "Sair",
         icon: <RocketIcon color="inherit" />,
         secondaryNavbar: true,
         component: SignUp,

@@ -45,12 +45,10 @@ const Projects = ({ title, amount, captions, data }) => {
           {data.map((row) => {
             return (
               <DashboardTableRow
-                key={row.name}
-                name={row.name}
-                logo={row.logo}
-                members={row.members}
-                budget={row.budget}
-                progression={row.progression}
+                  key={row.name}
+                  totalRace={row.totalRace}
+                  balance={row.balance}
+                  createdAt={row.createdAt}
               />
             );
           })}

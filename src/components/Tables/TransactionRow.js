@@ -1,9 +1,10 @@
 import { Box, Flex, Icon, Text, useColorModeValue } from "@chakra-ui/react";
 import React from "react";
+import {FaArrowDown, FaArrowUp} from "react-icons/fa";
 
 function TransactionRow(props) {
   const textColor = useColorModeValue("gray.700", "white");
-  const { name, date, logo, price } = props;
+  const { name, type, price, paymentMethod, input_or_output } = props;
 
   return (
     <Flex my="1rem" justifyContent="space-between">
@@ -12,11 +13,7 @@ function TransactionRow(props) {
           me="12px"
           borderRadius="50%"
           color={
-            price[0] === "+"
-              ? "green.400"
-              : price[0] === "-"
-              ? "red.400"
-              : "gray.400"
+              input_or_output === 'input'? "green.400" : "red.400"
           }
           border="1px solid"
           display="flex"
@@ -25,7 +22,7 @@ function TransactionRow(props) {
           w="35px"
           h="35px"
         >
-          <Icon as={logo} />
+          <Icon as={input_or_output === 'input' ? FaArrowDown : FaArrowUp} />
         </Box>
         <Flex direction="column">
           <Text
@@ -40,21 +37,19 @@ function TransactionRow(props) {
             color="gray.400"
             fontWeight="semibold"
           >
-            {date}
+              {paymentMethod === 'pix'?  'Pix' : 'Espécie'}
           </Text>
         </Flex>
       </Flex>
       <Box
-        color={
-          price[0] === "+"
-            ? "green.400"
-            : price[0] === "-"
-            ? "red.400"
-            : { textColor }
-        }
-      >
+          alignItems={'center'}
+          display={'flex'}
+          color={input_or_output === 'input'? "green.400" : "red.400"}>
         <Text fontSize={{ sm: "md", md: "lg", lg: "md" }} fontWeight="bold">
-          {price}
+          {Intl.NumberFormat('pt-BR', {
+              style: 'currency',
+              currency: 'BRL',
+          }).format(Math.abs(price))}
         </Text>
       </Box>
     </Flex>

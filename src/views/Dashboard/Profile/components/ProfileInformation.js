@@ -6,17 +6,30 @@ import CardBody from "components/Card/CardBody";
 import CardHeader from "components/Card/CardHeader";
 import React from "react";
 import { FaFacebook, FaInstagram, FaTwitter } from "react-icons/fa";
+import {DriverAPI} from "../../../../api/Driver";
+import {toast} from "react-toastify";
 
 const ProfileInformation = ({
   title,
-  description,
   name,
-  mobile,
   email,
-  location,
+  setEmail,
+  phone,
+  setPhone,
 }) => {
   // Chakra color mode
   const textColor = useColorModeValue("gray.700", "white");
+
+  const handleSubmit = (e) => {
+    const data = {
+      email,
+      phone: phone.replace(/[^\d]+/g, '')
+    };
+
+    DriverAPI.patch(name, data).then((response) => {
+      toast.success('Usuário atualizado com sucesso!');
+    })
+  }
 
   return (
     <Card p='16px' my={{ sm: "24px", xl: "0px" }}>
@@ -38,6 +51,8 @@ const ProfileInformation = ({
             placeholder='exemplo@gmail.com'
             mb='24px'
             size='lg'
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
           />
           <FormLabel ms='4px' fontSize='sm' fontWeight='normal'>
             Telefone
@@ -46,21 +61,11 @@ const ProfileInformation = ({
             fontSize='sm'
             ms='4px'
             borderRadius='15px'
-            type='text'
+            type='number'
             placeholder='(99) 99999-9999'
             mb='24px'
-          />
-          <FormLabel ms='4px' fontSize='sm' fontWeight='normal'>
-            Senha
-          </FormLabel>
-          <Input
-            fontSize='sm'
-            ms='4px'
-            borderRadius='15px'
-            type='password'
-            placeholder='********'
-            mb='24px'
-            size='lg'
+            value={phone}
+            onChange={(e) => setPhone(e.target.value)}
           />
           <Button
             type='submit'
@@ -76,7 +81,9 @@ const ProfileInformation = ({
             }}
             _active={{
               bg: "teal.400",
-            }}>
+            }}
+            onClick={handleSubmit}
+          >
             EDITAR
           </Button>
         </FormControl>
