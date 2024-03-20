@@ -17,7 +17,7 @@ function Enterprise() {
     }, []);
 
     const updateData = () => {
-        ImportAPI.getDriversActive().then((response) => {
+        ImportAPI.getEnterprisesActive().then((response) => {
             setData(response.data)
         })
     }
@@ -28,6 +28,7 @@ function Enterprise() {
         title={"Empresa"}
         captions={["NOME", "TOTAL DE CORRIDAS", "SALDO", "CRIADO EM", "REGISTRAR TRANSAÇÃO", "ENVIAR MENSAGEM"]}
         data={data}
+        updateData={updateData}
       />
     </Flex>
   );

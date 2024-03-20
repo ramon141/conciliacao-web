@@ -27,11 +27,10 @@ export default function Footer(props) {
         }}
         mb={{ base: "20px", xl: "0px" }}
       >
-        &copy; {1900 + new Date().getYear()},{" "}
         <Text as="span">
           {document.documentElement.dir === "rtl"
-            ? " مصنوع من ❤️ بواسطة"
-            : "Made with ❤️ by "}
+            ? ""
+            : ""}
         </Text>
         <Link
           // color={linkTeal}
@@ -40,21 +39,20 @@ export default function Footer(props) {
           target="_blank"
         >
           {document.documentElement.dir === "rtl"
-            ? " توقيت الإبداعية"
-            : "Creative Tim "}
+            ? ""
+            : ""}
         </Link>
-        &
         <Link
           // color={linkTeal}
           color="teal.400"
           href="https://www.simmmple.com"
           target="_blank"
         >
-          {document.documentElement.dir === "rtl" ? "سيممبل " : " Simmmple"}
+          {document.documentElement.dir === "rtl" ? "" : ""}
         </Link>
         {document.documentElement.dir === "rtl"
-          ? "للحصول على ويب أفضل"
-          : " for a better web"}
+          ? ""
+          : ""}
       </Text>
       <List display="flex">
         <ListItem
@@ -65,8 +63,8 @@ export default function Footer(props) {
         >
           <Link color="gray.400" href="https://www.creative-tim.com">
             {document.documentElement.dir === "rtl"
-              ? "توقيت الإبداعية"
-              : "Creative Tim"}
+              ? ""
+              : ""}
           </Link>
         </ListItem>
         <ListItem
@@ -76,7 +74,7 @@ export default function Footer(props) {
           }}
         >
           <Link color="gray.400" href="https://www.simmmple.com">
-            {document.documentElement.dir === "rtl" ? "سيممبل" : "Simmmple"}
+            {document.documentElement.dir === "rtl" ? "" : ""}
           </Link>
         </ListItem>
         <ListItem
@@ -90,7 +88,7 @@ export default function Footer(props) {
             href="#blog"
             href="https://creative-tim.com/blog"
           >
-            {document.documentElement.dir === "rtl" ? "مدونة" : "Blog"}
+            {document.documentElement.dir === "rtl" ? "" : ""}
           </Link>
         </ListItem>
         <ListItem>
@@ -99,7 +97,7 @@ export default function Footer(props) {
             href="#license"
             href="https://www.creative-tim.com/license"
           >
-            {document.documentElement.dir === "rtl" ? "رخصة" : "License"}
+            {document.documentElement.dir === "rtl" ? "" : ""}
           </Link>
         </ListItem>
       </List>

@@ -21,7 +21,7 @@ import {toast} from "react-toastify";
 function TablesTableRow(props) {
   const history = useHistory();
 
-  const { name, phone, totalRace, balance, createdAt } = props;
+  const { name, phone, totalRace, balance, createdAt, type } = props;
   const textColor = useColorModeValue("gray.700", "white");
   const bgStatus = useColorModeValue("red.400", "red.400");
   const walletIcon = useColorModeValue("green.400", "gray.200");
@@ -112,7 +112,7 @@ function TablesTableRow(props) {
         </Text>
       </Td>
       <Td style={{ textAlign: 'center' }}>
-        <Button p="0px" bg="transparent" variant="no-hover" onClick={() => history.push(`/admin/transaction/${name}/driver`)}>
+        <Button p="0px" bg="transparent" variant="no-hover" onClick={() => history.push(`/admin/transaction/${name}/${type}`)}>
           <Text
             fontSize="md"
             color="gray.400"

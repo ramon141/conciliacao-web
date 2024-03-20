@@ -123,6 +123,7 @@ const TableDrivers = ({ title, captions, data, updateData }) => {
                   phone={row.phone}
                   balance={row.balance}
                   createdAt={row.createdAt}
+                  type={'driver'}
                 />
               );
             })}
