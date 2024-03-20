@@ -8,6 +8,7 @@ import React from "react";
 import { FaFacebook, FaInstagram, FaTwitter } from "react-icons/fa";
 import {DriverAPI} from "../../../../api/Driver";
 import {toast} from "react-toastify";
+import Phone from "../../../../components/InputMaks/Phone";
 
 const ProfileInformation = ({
   title,
@@ -57,15 +58,16 @@ const ProfileInformation = ({
           <FormLabel ms='4px' fontSize='sm' fontWeight='normal'>
             Telefone
           </FormLabel>
-          <Input
-            fontSize='sm'
-            ms='4px'
-            borderRadius='15px'
-            type='number'
-            placeholder='(99) 99999-9999'
-            mb='24px'
-            value={phone}
-            onChange={(e) => setPhone(e.target.value)}
+          <Phone
+              height={50}
+              min="1"
+              value={phone}
+              placeholder='(99) 99999-9999'
+              fontSize='sm'
+              ms='4px'
+              borderRadius='15px'
+              mb='24px'
+              onChange={(e) => setPhone(e.target.value)}
           />
           <Button
             type='submit'

@@ -2,9 +2,10 @@ import { Box, Flex, Icon, Text, useColorModeValue } from "@chakra-ui/react";
 import React from "react";
 import {FaArrowDown, FaArrowUp} from "react-icons/fa";
 import moment from "moment";
+import {formatNumberToMoney} from "../../utils/formatNumberToMoney";
 
 function TimelineRow(props) {
-  const { title, type, date, paymentMethod, index, arrLength } = props;
+  const { title, type, date, paymentMethod, index, arrLength, value } = props;
   const textColor = useColorModeValue("gray.700", "white.300");
   const bgIconColor = useColorModeValue("white.300", "gray.700");
 
@@ -38,7 +39,7 @@ function TimelineRow(props) {
 
       <Flex direction="column" justifyContent="flex-start" h="100%" marginLeft={3}>
         <Text fontSize="sm" color={textColor} fontWeight="bold">
-          {title}
+          {title}, {formatNumberToMoney(value)}
         </Text>
         <Text fontSize="sm" color="gray.400" fontWeight="normal">
           {moment(date).format('DD/MM/YYYY')}

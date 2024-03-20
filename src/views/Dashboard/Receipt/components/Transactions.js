@@ -70,6 +70,7 @@ const Transactions = ({
                 name={row.name}
                 logo={row.logo}
                 price={row.price}
+                color={row.input_or_output === 'input'? "green.400" : "red.400"}
               />
             );
           })}

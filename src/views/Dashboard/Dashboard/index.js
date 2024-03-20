@@ -13,8 +13,8 @@ import LineChart from "components/Charts/LineChart";
 import {
   CartIcon,
   DocumentIcon,
-  GlobeIcon,
-  WalletIcon,
+  GlobeIcon, MoneyWaitIcon, MotorcycleIcon, ProfitIcon, TotalIcon,
+  WalletIcon, WeekIcon,
 } from "components/Icons/Icons.js";
 import React, {useEffect, useState} from "react";
 import { dashboardTableData, timelineData } from "variables/general";
@@ -44,44 +44,44 @@ export default function Dashboard() {
         <BoxDashboard
             title={"Lucro da Última Semana"}
             amount={formatNumberToMoney(data.profitLastWeek, false)}
-            icon={<WalletIcon h={"24px"} w={"24px"} color={iconBoxInside} />}
+            icon={<ProfitIcon h={"24px"} w={"24px"} color={iconBoxInside} />}
         />
         <BoxDashboard
             title={"Total de Motoristas com Pedência"}
             amount={data.quantityDriversWithPendding}
-            icon={<GlobeIcon h={"24px"} w={"24px"} color={iconBoxInside} />}
+            icon={<TotalIcon h={"24px"} w={"24px"} color={iconBoxInside} />}
         />
         <BoxDashboard
             title={"Quantidade de Corridas na semana"}
             amount={data.quantityRacersWeek}
-            icon={<DocumentIcon h={"24px"} w={"24px"} color={iconBoxInside} />}
+            icon={<MotorcycleIcon h={"24px"} w={"24px"} color={iconBoxInside} />}
         />
         <BoxDashboard
-            title={"Valor recebido"}
+            title={"Valor recebido na semana"}
             amount={formatNumberToMoney(data.earnWeek)}
-            icon={<CartIcon h={"24px"} w={"24px"} color={iconBoxInside} />}
+            icon={<WeekIcon h={"24px"} w={"24px"} color={iconBoxInside} />}
         />
 
         <BoxDashboard
             title={"Valor a ser pago aos motoristas"}
-            amount={formatNumberToMoney(data.toPayDrivers, false)}
-            icon={<WalletIcon h={"24px"} w={"24px"} color={iconBoxInside} />}
+            amount={formatNumberToMoney(data.toPayDrivers)}
+            icon={<MoneyWaitIcon h={"24px"} w={"24px"} color={iconBoxInside} />}
         />
         <BoxDashboard
             title={"Valor a ser recebido dos motoristas"}
             amount={formatNumberToMoney(data.toReceiveDrivers, false)}
-            icon={<GlobeIcon h={"24px"} w={"24px"} color={iconBoxInside} />}
+            icon={<WalletIcon h={"24px"} w={"24px"} color={iconBoxInside} />}
         />
 
         <BoxDashboard
             title={"Valor a ser pago as empresas"}
-            amount={formatNumberToMoney(data.toPayEnterprises, false)}
-            icon={<WalletIcon h={"24px"} w={"24px"} color={iconBoxInside} />}
+            amount={formatNumberToMoney(data.toPayEnterprises)}or a ser pago as e
+            icon={<MoneyWaitIcon h={"24px"} w={"24px"} color={iconBoxInside} />}
         />
         <BoxDashboard
             title={"Valor a ser recebido das empresas"}
             amount={formatNumberToMoney(data.toReceiveEnterprises, false)}
-            icon={<GlobeIcon h={"24px"} w={"24px"} color={iconBoxInside} />}
+            icon={<WalletIcon h={"24px"} w={"24px"} color={iconBoxInside} />}
         />
       </SimpleGrid>
 

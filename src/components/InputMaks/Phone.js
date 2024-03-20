@@ -4,7 +4,7 @@ import {Input, InputGroup, InputLeftElement} from "@chakra-ui/react";
 import {PhoneIcon, VerifyIcon} from "../Icons/Icons";
 
 
-const CPFCNPJ = ({value, onChange, ...props}) => {
+const Phone = ({value, onChange, ...props}) => {
     const mask = '(99) 99999-9999';
 
     return (
@@ -29,4 +29,4 @@ const CPFCNPJ = ({value, onChange, ...props}) => {
     );
 }
 
-export default CPFCNPJ;
+export default Phone;

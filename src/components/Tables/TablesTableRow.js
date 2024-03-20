@@ -16,6 +16,7 @@ import { MessageIcon } from "components/Icons/Icons";
 import moment from "moment";
 import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
 import {useLocation} from "react-router-dom";
+import {toast} from "react-toastify";
 
 function TablesTableRow(props) {
   const history = useHistory();
@@ -23,7 +24,6 @@ function TablesTableRow(props) {
   const { name, phone, totalRace, balance, createdAt } = props;
   const textColor = useColorModeValue("gray.700", "white");
   const bgStatus = useColorModeValue("red.400", "red.400");
-  const colorStatus = useColorModeValue("white", "gray.400");
   const walletIcon = useColorModeValue("green.400", "gray.200");
   const { path } = useLocation();
 
@@ -47,6 +47,13 @@ function TablesTableRow(props) {
   }
 
   const linkWhatsApp = createLinkWhats();
+
+  const handleClickWhatsapp = (e) => {
+    if(!phone){
+      toast.error('Este usuário não tem o telefone cadastrado');
+      e.preventDefault();
+    }
+  }
 
   return (
     <Tr>
@@ -125,6 +132,7 @@ function TablesTableRow(props) {
           variant="no-hover"
           target="_blank"
           href={linkWhatsApp}
+          onClick={handleClickWhatsapp}
         >
           <Text
             fontSize="md"

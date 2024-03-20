@@ -4,7 +4,7 @@ import {FaArrowDown, FaArrowUp} from "react-icons/fa";
 
 function TransactionRow(props) {
   const textColor = useColorModeValue("gray.700", "white");
-  const { name, type, price, paymentMethod, input_or_output } = props;
+  const { name, color, price, paymentMethod, input_or_output } = props;
 
   return (
     <Flex my="1rem" justifyContent="space-between">
@@ -12,9 +12,7 @@ function TransactionRow(props) {
         <Box
           me="12px"
           borderRadius="50%"
-          color={
-              input_or_output === 'input'? "green.400" : "red.400"
-          }
+          color={color}
           border="1px solid"
           display="flex"
           alignItems="center"
@@ -22,7 +20,7 @@ function TransactionRow(props) {
           w="35px"
           h="35px"
         >
-          <Icon as={input_or_output === 'input' ? FaArrowDown : FaArrowUp} />
+          <Icon as={color.startsWith('green') ? FaArrowDown : FaArrowUp} />
         </Box>
         <Flex direction="column">
           <Text
@@ -44,7 +42,7 @@ function TransactionRow(props) {
       <Box
           alignItems={'center'}
           display={'flex'}
-          color={input_or_output === 'input'? "green.400" : "red.400"}>
+          color={color}>
         <Text fontSize={{ sm: "md", md: "lg", lg: "md" }} fontWeight="bold">
           {Intl.NumberFormat('pt-BR', {
               style: 'currency',

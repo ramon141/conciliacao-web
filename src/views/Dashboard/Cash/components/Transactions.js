@@ -74,6 +74,7 @@ const Transactions = ({
                 type={row.type}
                 price={row.value}
                 paymentMethod={row.payment_method}
+                color={row.input_or_output === 'input'? "green.400" : "red.400"}
               />
             );
           })}

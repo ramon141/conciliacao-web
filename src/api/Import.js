@@ -8,19 +8,23 @@ function postDrivers(dateInit, dateEnd, drivers){
     });
 }
 
-function postEnterprises(data){
-    return api.post('/import/enterprises', data);
+function postEnterprises(dateInit, dateEnd, enterprises){
+    return api.post('/imports/enterprises', {
+        dateEnd,
+        dateInit,
+        enterprises
+    });
 }
 
 function getDriversActive(){
     return api.get('/imports/drivers-active');
 }
 
-function getEnterprises(){
-    return api.get('/import/enterprises');
+function getEnterprisesActive(){
+    return api.get('/imports/enterprises-active');
 }
 
 export const ImportAPI = {
     postDrivers, postEnterprises,
-    getDriversActive, getEnterprises
+    getDriversActive, getEnterprisesActive
 };

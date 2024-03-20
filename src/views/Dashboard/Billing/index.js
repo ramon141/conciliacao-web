@@ -54,9 +54,9 @@ function Billing() {
             templateColumns={{
               sm: "1fr",
               md: "1fr",
+              lg: "1fr 1fr",
               xl: "1fr 1fr 1fr 1fr 1fr",
             }}
-            templateRows={{ sm: "auto auto auto", md: "1fr auto", xl: "1fr" }}
             gap='26px'>
             <DriverCard
               backgroundImage={BackgroundCard1}
@@ -79,12 +79,12 @@ function Billing() {
                 />
               }
             />
-          <PaymentStatistics
-              icon={<Icon h={"24px"} w={"24px"} color='white' as={userData.balance > 0 ? FaArrowUp : FaArrowDown} />}
-              title={"Saldo"}
-              description={userData.balance > 0? "Você deve pagar" : "Você deve receber"}
-              amount={formatNumberToMoney(userData.balance)}
-          />
+              <PaymentStatistics
+                  icon={<Icon h={"24px"} w={"24px"} color='white' as={userData.balance > 0 ? FaArrowUp : FaArrowDown} />}
+                  title={"Saldo"}
+                  description={userData.balance > 0? "Você deve pagar" : "Você deve receber"}
+                  amount={formatNumberToMoney(userData.balance)}
+              />
             <PaymentStatistics
               icon={<Icon h={"24px"} w={"24px"} color='white' as={FaWallet} />}
               title={"Total Pago"}
@@ -93,7 +93,7 @@ function Billing() {
             />
             <PaymentStatistics
               icon={<Icon h={"24px"} w={"24px"} color='white' as={FaPaypal} />}
-              title={"Paypal"}
+              title={"Recebido"}
               description={"Total Recebido do motorista"}
               amount={formatNumberToMoney(userData.totalReceive)}
             />

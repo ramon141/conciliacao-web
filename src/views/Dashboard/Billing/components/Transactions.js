@@ -74,6 +74,10 @@ const Transactions = ({
                           'Você deve receber referente as corridas da semana') :
                       row.type === 'receive' ? 'Recebendo pagamento' : 'Fazendo pagamento'
                 }`}
+                color={
+                  (row.payment_method === 'racer' && row.value < 0) || row.type === 'receive'?
+                    "green.400" : "red.400"
+                }
                 type={row.type}
                 price={row.value}
                 paymentMethod={row.payment_method}

@@ -5,7 +5,7 @@ import Card from "components/Card/Card.js";
 import CardBody from "components/Card/CardBody.js";
 // Custom icons
 import {
-  CartIcon,
+  CartIcon, CashIcon, DonateIcon, ProfitIcon,
   RocketIcon,
   StatsIcon,
   WalletIcon,
@@ -31,17 +31,17 @@ const ActiveUsers = ({ title, data, chart }) => {
             <ChartStatistics
               title={"Em caixa"}
               amount={formatNumberToMoney(data.inCash, false)}
-              icon={<WalletIcon h={"15px"} w={"15px"} color={iconBoxInside} />}
+              icon={<CashIcon h={"15px"} w={"15px"} color={iconBoxInside} />}
             />
             <ChartStatistics
               title={"Gasto no mês"}
               amount={formatNumberToMoney(data.inCash, false)}
-              icon={<RocketIcon h={"15px"} w={"15px"} color={iconBoxInside} />}
+              icon={<DonateIcon h={"20px"} w={"20px"} color={iconBoxInside} />}
             />
             <ChartStatistics
               title={"Ganhos no mês"}
               amount={formatNumberToMoney(data.inCash, false)}
-              icon={<CartIcon h={"15px"} w={"15px"} color={iconBoxInside} />}
+              icon={<ProfitIcon h={"15px"} w={"15px"} color={iconBoxInside} />}
             />
             <ChartStatistics
               title={"Items"}

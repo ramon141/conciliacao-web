@@ -1,5 +1,6 @@
 // Chakra imports
 import {
+  Button,
   Flex,
   Icon,
   Table,
@@ -14,20 +15,29 @@ import {
 import Card from "components/Card/Card.js";
 import CardHeader from "components/Card/CardHeader.js";
 import DashboardTableRow from "components/Tables/DashboardTableRow";
-import React from "react";
+import React, {useState} from "react";
 import { IoCheckmarkDoneCircleSharp } from "react-icons/io5";
+import {ImportAPI} from "../../../../api/Import";
+import moment from "moment/moment";
+import {toast} from "react-toastify";
 
 const Projects = ({ title, amount, captions, data }) => {
+  const [isOpen, setIsOpen] = useState(false);
   const textColor = useColorModeValue("gray.700", "white");
+
+
 
   return (
     <Card p='16px' overflowX={{ sm: "scroll", xl: "hidden" }}>
       <CardHeader p='12px 0px 28px 0px'>
-        <Flex direction='column'>
-          <Text fontSize='lg' color={textColor} fontWeight='bold' pb='.5rem'>
+        <CardHeader p='6px 0px 22px 0px' style={{ justifyContent: 'space-between' }}>
+          <Text fontSize='xl' color={textColor} fontWeight='bold'>
             {title}
           </Text>
-        </Flex>
+          <Button color='white' fontSize='xs' variant='no-hover' onClick={() => setIsOpen(true)}>
+            IMPORTAR TABELA
+          </Button>
+        </CardHeader>
       </CardHeader>
       <Table variant='simple' color={textColor}>
         <Thead>
@@ -46,6 +56,7 @@ const Projects = ({ title, amount, captions, data }) => {
             return (
               <DashboardTableRow
                   key={row.name}
+                  name={row.name}
                   totalRace={row.totalRace}
                   balance={row.balance}
                   createdAt={row.createdAt}

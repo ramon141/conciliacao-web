@@ -1,9 +1,9 @@
 import React, { useState } from 'react'
 import { ReactSpreadsheetImport } from 'react-spreadsheet-import';
 import { pt_BR } from './import-pt-br';
-import { fields } from './fields';
+import {fieldsDriver, fieldsEnterprise} from './fieldsDriver';
 
-const SpreadsheetImport = ({isOpen, setIsOpen, onSubmit}) => {
+const SpreadsheetImport = ({isOpen, setIsOpen, onSubmit, type}) => {
 
     const onClose = (e) => {
         setIsOpen(false)
@@ -14,7 +14,7 @@ const SpreadsheetImport = ({isOpen, setIsOpen, onSubmit}) => {
             isOpen={isOpen}
             onClose={onClose}
             onSubmit={onSubmit}
-            fields={fields}
+            fields={type === 'driver' ? fieldsDriver : fieldsEnterprise}
             translations={pt_BR}
         />
     )

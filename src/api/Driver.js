@@ -12,6 +12,10 @@ function patch(name, data){
     return api.patch(`/drivers/${encodeURI(name)}`, data);
 }
 
+function post(data){
+    return api.post(`/drivers`, data);
+}
+
 export const DriverAPI = {
-    get, patch
+    get, patch, post
 };
