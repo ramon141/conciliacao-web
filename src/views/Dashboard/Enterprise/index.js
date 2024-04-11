@@ -2,8 +2,6 @@
 import { Flex } from "@chakra-ui/react";
 import React, {useEffect, useState} from "react";
 import EnterpriseList from "./components/EnterpriseList";
-import Projects from "./components/Projects";
-import { tablesTableData, dashboardTableData } from "variables/general";
 import {ImportAPI} from "../../../api/Import";
 
 function Enterprise() {
@@ -26,7 +24,7 @@ function Enterprise() {
     <Flex direction='column' pt={{ base: "120px", md: "75px" }}>
       <EnterpriseList
         title={"Empresa"}
-        captions={["NOME", "TOTAL DE CORRIDAS", "SALDO", "CRIADO EM", "REGISTRAR TRANSAÇÃO", "ENVIAR MENSAGEM"]}
+        captions={["NOME", "TELEFONE", "SALDO", "CRIADO EM", "REGISTRAR TRANSAÇÃO", "ENVIAR MENSAGEM"]}
         data={data}
         updateData={updateData}
       />

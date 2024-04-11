@@ -1,9 +1,7 @@
 import {
-  Avatar,
   Badge,
   Button,
   Flex,
-  Icon,
   Link,
   Td,
   Text,
@@ -15,17 +13,15 @@ import {PenIcon, WalletIcon} from "components/Icons/Icons";
 import { MessageIcon } from "components/Icons/Icons";
 import moment from "moment";
 import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
-import {useLocation} from "react-router-dom";
 import {toast} from "react-toastify";
 
 function TablesTableRow(props) {
   const history = useHistory();
 
-  const { name, phone, totalRace, balance, createdAt, type } = props;
+  const { name, phone, totalRace, balance, createdAt, type, id } = props;
   const textColor = useColorModeValue("gray.700", "white");
   const bgStatus = useColorModeValue("red.400", "red.400");
   const walletIcon = useColorModeValue("green.400", "gray.200");
-  const { path } = useLocation();
 
   const balanceFormatted = Intl.NumberFormat('pt-BR', {
     style: 'currency',
@@ -34,7 +30,10 @@ function TablesTableRow(props) {
 
   const handleEdit = () => {
     const type = location.href.split('/').pop();
-    history.push(`/admin/profile/${name}/${type}`);
+    if(type === 'driver')
+      history.push(`/admin/profile/${name}/${type}`);
+    else if(type === 'enterprise')
+      history.push(`/admin/profile/${id}/${type}`);
   }
 
   const createLinkWhats = () => {
@@ -53,6 +52,13 @@ function TablesTableRow(props) {
       toast.error('Este usuário não tem o telefone cadastrado');
       e.preventDefault();
     }
+  }
+
+  const handleWalletClick = () => {
+    if(type === 'driver')
+      history.push(`/admin/transaction/${name}/${type}`)
+    else if(type === 'enteprise')
+      history.push(`/admin/transaction/${id}/${type}`)
   }
 
   return (
@@ -76,9 +82,6 @@ function TablesTableRow(props) {
                   onClick={handleEdit}
               />
             </Text>
-            <div >
-
-            </div>
             <Text fontSize="sm" color="gray.400" fontWeight="normal">
               {phone}
             </Text>
@@ -112,7 +115,7 @@ function TablesTableRow(props) {
         </Text>
       </Td>
       <Td style={{ textAlign: 'center' }}>
-        <Button p="0px" bg="transparent" variant="no-hover" onClick={() => history.push(`/admin/transaction/${name}/${type}`)}>
+        <Button p="0px" bg="transparent" variant="no-hover" onClick={handleWalletClick}>
           <Text
             fontSize="md"
             color="gray.400"

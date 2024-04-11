@@ -9,6 +9,7 @@ import { FaFacebook, FaInstagram, FaTwitter } from "react-icons/fa";
 import {DriverAPI} from "../../../../api/Driver";
 import {toast} from "react-toastify";
 import Phone from "../../../../components/InputMaks/Phone";
+import {EnterpriseAPI} from "../../../../api/Enterprise";
 
 const ProfileInformation = ({
   title,
@@ -17,9 +18,13 @@ const ProfileInformation = ({
   setEmail,
   phone,
   setPhone,
+  type,
+  id
 }) => {
   // Chakra color mode
   const textColor = useColorModeValue("gray.700", "white");
+
+  console.log(name, id);
 
   const handleSubmit = (e) => {
     const data = {
@@ -27,9 +32,15 @@ const ProfileInformation = ({
       phone: phone.replace(/[^\d]+/g, '')
     };
 
-    DriverAPI.patch(name, data).then((response) => {
-      toast.success('Usuário atualizado com sucesso!');
-    })
+    if(type === 'driver') {
+      DriverAPI.patch(name, data).then((response) => {
+        toast.success('Usuário atualizado com sucesso!');
+      })
+    } else if(type === 'enterprise') {
+      EnterpriseAPI.patch(id, data).then((response) => {
+        toast.success('Empresa atualizada com sucesso!');
+      })
+    }
   }
 
   return (

@@ -11,7 +11,6 @@ import React, {useState} from "react";
 import Phone from "../InputMaks/Phone";
 import Money from "../InputMaks/Money";
 import {QuestionIcon} from "../Icons/Icons";
-import {DriverAPI} from "../../api/Driver";
 import {toast} from "react-toastify";
 import moment from "moment";
 import {EnterpriseAPI} from "../../api/Enterprise";
@@ -35,7 +34,7 @@ export default function ModalRegisterEnterprise({isOpen, onClose, onUpdate}) {
         };
 
         EnterpriseAPI.post(data)
-            .then((response) => {
+            .then(() => {
                 toast.success('Empresa cadastrado com sucesso!');
                 onClose();
                 clear();

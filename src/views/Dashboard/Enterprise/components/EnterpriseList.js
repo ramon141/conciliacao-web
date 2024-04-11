@@ -1,6 +1,6 @@
 // Chakra imports
 import {
-  Button, Grid, Input, InputGroup, InputRightAddon,
+  Button, Grid, Input, InputGroup, InputRightAddon, Select,
   Table,
   Tbody,
   Text,
@@ -14,27 +14,28 @@ import Card from "components/Card/Card.js";
 import CardBody from "components/Card/CardBody.js";
 import CardHeader from "components/Card/CardHeader.js";
 import TablesTableRow from "components/Tables/TablesTableRow";
-import React, {useEffect, useState} from "react";
+import React, { useEffect, useState } from "react";
 import SpreadsheetImport from "../../../../components/SpreadsheetImport";
-import {ImportAPI} from "../../../../api/Import";
+import { ImportAPI } from "../../../../api/Import";
 import moment from "moment/moment";
-import {toast} from "react-toastify";
-import {SearchIcon} from "../../../../components/Icons/Icons";
-import {AddIcon} from "@chakra-ui/icons";
-import ModalRegisterDriver from "../../../../components/ModalRegisterDriver";
+import { toast } from "react-toastify";
+import { SearchIcon } from "../../../../components/Icons/Icons";
+import { AddIcon } from "@chakra-ui/icons";
 import ModalRegisterEnterprise from "../../../../components/ModalRegisterEnterprise";
+import { formatPhoneNumber } from "../../../../utils/formatPhone";
 
 const EnterpriseList = ({ title, captions, data, updateData }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [search, setSearch] = useState('');
+  const [type, setType] = useState('');
   const [filtredData, setFiltredData] = useState([]);
   const [isOpenModal, setIsOpenModal] = useState(false);
 
 
   const textColor = useColorModeValue("gray.700", "white");
   const bgButton = useColorModeValue(
-      "linear-gradient(81.62deg, #313860 2.25%, #151928 79.87%)",
-      "gray.800"
+    "linear-gradient(81.62deg, #313860 2.25%, #151928 79.87%)",
+    "gray.800"
   );
 
   useEffect(() => {
@@ -43,28 +44,42 @@ const EnterpriseList = ({ title, captions, data, updateData }) => {
 
   const onSubmit = (e) => {
     const enterprises = e.validData.filter((i) => i.enterpriseName.toLowerCase() !== 'total');
+
     ImportAPI.postEnterprises(
-        moment().startOf('week'),
-        moment().endOf('week'),
-        enterprises
-    ).then((response) => {
+      moment().startOf('week'),
+      moment().endOf('week'),
+      enterprises
+    ).then(() => {
       toast.success('Dados importados com sucesso!');
       updateData();
     })
   }
 
   const filter = () => {
-    const newData = data.filter((driver) => driver.name.toLowerCase().includes(search.toLowerCase()));
+    const newData = data.filter((driver) => {
+      let nameIsValid = true, typeIsValid = true;
+
+      if (search !== '')
+        nameIsValid = driver.name.toLowerCase().includes(search.toLowerCase());
+      if (type !== '') {
+        if (type === 'a_pagar')
+          typeIsValid = driver.balance > 0;
+        else if (type === 'a_receber')
+          typeIsValid = driver.balance < 0;
+      }
+
+      return nameIsValid && typeIsValid;
+    });
+
     setFiltredData(newData);
   }
 
   useEffect(() => {
-    if(search !== '')
-      filter();
-  }, [search]);
+    filter();
+  }, [search, type]);
 
   const handleChangeSearch = (e) => {
-    if(e.target.value === '')
+    if (e.target.value === '')
       setFiltredData(data);
 
     setSearch(e.target.value)
@@ -78,20 +93,29 @@ const EnterpriseList = ({ title, captions, data, updateData }) => {
           {title}
         </Text>
         <Grid
-            width={'500px'}
-            gap={'15px'}
-            templateColumns={{ sm: "1fr 1fr 1fr", lg: "4fr 2fr 0.1fr" }}
+          width={'700px'}
+          gap={'15px'}
+          templateColumns={{ sm: "1fr 1fr 1fr", lg: "4fr 2fr 2fr  0.1fr" }}
         >
           <InputGroup >
             <Input
-                value={search}
-                onChange={handleChangeSearch}
-                placeholder='Nome da Empresa'
+              value={search}
+              onChange={handleChangeSearch}
+              placeholder='Nome da Empresa'
             />
             <InputRightAddon cursor={'pointer'} onClick={filter}>
               <SearchIcon width={'24px'} height={'24px'} />
             </InputRightAddon>
           </InputGroup>
+
+          <Select
+            placeholder='Sem Filtro...'
+            value={type}
+            onChange={(e) => setType(e.target.value)}
+          >
+            <option value='a_pagar'>A pagar</option>
+            <option value='a_receber'>A receber</option>
+          </Select>
 
           <Button bg={bgButton} color='white' fontSize='xs' variant='no-hover' onClick={() => setIsOpen(true)}>
             IMPORTAR TABELA
@@ -122,7 +146,7 @@ const EnterpriseList = ({ title, captions, data, updateData }) => {
                   key={row.name}
                   id={row.id}
                   name={row.name}
-                  totalRace={row.totalRace}
+                  totalRace={formatPhoneNumber(row.phone || "")}
                   phone={row.phone}
                   balance={row.balance}
                   createdAt={row.createdAt}
@@ -134,7 +158,7 @@ const EnterpriseList = ({ title, captions, data, updateData }) => {
         </Table>
       </CardBody>
 
-      <SpreadsheetImport isOpen={isOpen} setIsOpen={setIsOpen} onSubmit={onSubmit} type={'enterprise'}/>
+      <SpreadsheetImport isOpen={isOpen} setIsOpen={setIsOpen} onSubmit={onSubmit} type={'enterprise'} />
       <ModalRegisterEnterprise isOpen={isOpenModal} onClose={() => setIsOpenModal(false)} onUpdate={updateData} />
     </Card>
   );

@@ -5,14 +5,12 @@ import {
     ModalBody,
     ModalCloseButton,
     ModalContent, ModalFooter, ModalHeader,
-    ModalOverlay, Select, Tooltip,
-    useDisclosure
+    ModalOverlay, Select, Tooltip
 } from "@chakra-ui/react";
 import React, {useState, useRef} from "react";
 import Phone from "../InputMaks/Phone";
 import Money from "../InputMaks/Money";
 import {QuestionIcon} from "../Icons/Icons";
-import {ImportAPI} from "../../api/Import";
 import {DriverAPI} from "../../api/Driver";
 import {toast} from "react-toastify";
 import moment from "moment";

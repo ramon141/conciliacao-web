@@ -1,6 +1,5 @@
 // Chakra imports
 import { ChakraProvider, Portal, useDisclosure } from '@chakra-ui/react';
-import Configurator from 'components/Configurator/Configurator';
 import Footer from 'components/Footer/Footer.js';
 // Layout components
 import AdminNavbar from 'components/Navbars/AdminNavbar.js';
@@ -13,7 +12,6 @@ import '@fontsource/roboto/500.css';
 import '@fontsource/roboto/700.css';
 // Custom Chakra theme
 import theme from 'theme/theme.js';
-import FixedPlugin from '../components/FixedPlugin/FixedPlugin';
 // Custom components
 import MainPanel from '../components/Layout/MainPanel';
 import PanelContainer from '../components/Layout/PanelContainer';
@@ -23,8 +21,6 @@ import { ToastContainer } from 'react-toastify';
 export default function Dashboard(props) {
 	const { ...rest } = props;
 	// states and functions
-	const [sidebarVariant, setSidebarVariant] = useState('transparent');
-	const [fixed, setFixed] = useState(false);
 	// functions for changing the states from components
 	const getRoute = () => {
 		return window.location.pathname !== '/admin/full-screen-maps';
@@ -84,7 +80,7 @@ export default function Dashboard(props) {
 			}
 		});
 	};
-	const { isOpen, onOpen, onClose } = useDisclosure();
+	const { onOpen } = useDisclosure();
 	document.documentElement.dir = 'ltr';
 	// Chakra Color Mode
 	return (
@@ -93,7 +89,7 @@ export default function Dashboard(props) {
 				routes={routes}
 				logoText={'CONCILIAÇÃO'}
 				display='none'
-				sidebarVariant={sidebarVariant}
+				sidebarVariant={'transparent'}
 				{...rest}
 			/>
 			<MainPanel
@@ -107,7 +103,7 @@ export default function Dashboard(props) {
 						logoText={'CONCILIAÇÃO'}
 						brandText={getActiveRoute(routes)}
 						secondary={getActiveNavbar(routes)}
-						fixed={fixed}
+						fixed={false}
 						{...rest}
 					/>
 				</Portal>

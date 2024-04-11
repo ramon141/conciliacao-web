@@ -1,9 +1,8 @@
 /*eslint-disable*/
 import React from "react";
 import { Flex, Link, List, ListItem, Text } from "@chakra-ui/react";
-import PropTypes from "prop-types";
 
-export default function Footer(props) {
+export default function Footer() {
   // const linkTeal = useColorModeValue("teal.400", "red.200");=
   return (
     <Flex
@@ -35,7 +34,7 @@ export default function Footer(props) {
         <Link
           // color={linkTeal}
           color="teal.400"
-          href="https://www.creative-tim.com"
+          href="#"
           target="_blank"
         >
           {document.documentElement.dir === "rtl"
@@ -45,7 +44,7 @@ export default function Footer(props) {
         <Link
           // color={linkTeal}
           color="teal.400"
-          href="https://www.simmmple.com"
+          href="#"
           target="_blank"
         >
           {document.documentElement.dir === "rtl" ? "" : ""}
@@ -61,7 +60,7 @@ export default function Footer(props) {
             md: "44px",
           }}
         >
-          <Link color="gray.400" href="https://www.creative-tim.com">
+          <Link color="gray.400" href="#">
             {document.documentElement.dir === "rtl"
               ? ""
               : ""}
@@ -85,8 +84,7 @@ export default function Footer(props) {
         >
           <Link
             color="gray.400"
-            href="#blog"
-            href="https://creative-tim.com/blog"
+            href="#"
           >
             {document.documentElement.dir === "rtl" ? "" : ""}
           </Link>
@@ -94,8 +92,7 @@ export default function Footer(props) {
         <ListItem>
           <Link
             color="gray.400"
-            href="#license"
-            href="https://www.creative-tim.com/license"
+            href="#"
           >
             {document.documentElement.dir === "rtl" ? "" : ""}
           </Link>

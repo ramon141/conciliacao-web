@@ -11,6 +11,7 @@ import PlatformSettings from "./components/PlatformSettings";
 import ProfileInformation from "./components/ProfileInformation";
 import {useParams} from "react-router-dom/cjs/react-router-dom";
 import {DriverAPI} from "../../../api/Driver";
+import {EnterpriseAPI} from "../../../api/Enterprise";
 
 function Profile() {
 
@@ -29,7 +30,13 @@ function Profile() {
                 setUserData(userData);
             })
         } else if(type === 'enterprise'){
+            EnterpriseAPI.get(id).then((response) => {
+                const {email, phone, ...userData} = response.data;
 
+                setEmail(email);
+                setPhone(phone);
+                setUserData(userData);
+            })
         }
     }, [type]);
 
@@ -58,8 +65,10 @@ function Profile() {
         />
         <ProfileInformation
           title={"Editar Informações"}
+          type={type}
           name={userData.name}
           email={email}
+          id={userData.id}
           setEmail={setEmail}
           phone={phone}
           setPhone={setPhone}
