@@ -9,11 +9,11 @@ import {
   useColorModeValue,
 } from "@chakra-ui/react";
 import React from "react";
-import {PenIcon, WalletIcon} from "components/Icons/Icons";
+import { PenIcon, WalletIcon } from "components/Icons/Icons";
 import { MessageIcon } from "components/Icons/Icons";
 import moment from "moment";
 import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
-import {toast} from "react-toastify";
+import { toast } from "react-toastify";
 
 function TablesTableRow(props) {
   const history = useHistory();
@@ -30,15 +30,15 @@ function TablesTableRow(props) {
 
   const handleEdit = () => {
     const type = location.href.split('/').pop();
-    if(type === 'driver')
+    if (type === 'driver')
       history.push(`/admin/profile/${name}/${type}`);
-    else if(type === 'enterprise')
+    else if (type === 'enterprise')
       history.push(`/admin/profile/${id}/${type}`);
   }
 
   const createLinkWhats = () => {
     const message =
-        `Olá ${name.trim()}, você ${balance > 0? 'deve pagar' : 'irá receber'}  ${balanceFormatted} referente ao sistema Juma.`;
+      `Olá ${name.trim()}, você ${balance > 0 ? 'deve pagar' : 'irá receber'}  ${balanceFormatted} referente ao sistema Juma.`;
 
     const messageEncoded = window.encodeURIComponent(message);
 
@@ -48,17 +48,17 @@ function TablesTableRow(props) {
   const linkWhatsApp = createLinkWhats();
 
   const handleClickWhatsapp = (e) => {
-    if(!phone){
+    if (!phone) {
       toast.error('Este usuário não tem o telefone cadastrado');
       e.preventDefault();
     }
   }
 
   const handleWalletClick = () => {
-    if(type === 'driver')
+    if (type === 'driver')
       history.push(`/admin/transaction/${name}/${type}`)
-    else if(type === 'enteprise')
-      history.push(`/admin/transaction/${id}/${type}`)
+    else if (type === 'enterprise')
+      history.push(`/admin/transaction/${name}/${type}`)
   }
 
   return (
@@ -74,12 +74,12 @@ function TablesTableRow(props) {
             >
               {name}
               <PenIcon
-                  style={{cursor: 'pointer', marginTop: -10}}
-                  color={walletIcon}
-                  w="20px"
-                  h="20px"
-                  me="40px"
-                  onClick={handleEdit}
+                style={{ cursor: 'pointer', marginTop: -10 }}
+                color={walletIcon}
+                w="20px"
+                h="20px"
+                me="40px"
+                onClick={handleEdit}
               />
             </Text>
             <Text fontSize="sm" color="gray.400" fontWeight="normal">
@@ -144,10 +144,10 @@ function TablesTableRow(props) {
             cursor="pointer"
           >
             <MessageIcon
-                color={walletIcon}
-                w="40px"
-                h="30px"
-                me="40px"
+              color={walletIcon}
+              w="40px"
+              h="30px"
+              me="40px"
             />
           </Text>
         </Link>

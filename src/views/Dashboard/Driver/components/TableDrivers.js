@@ -57,6 +57,22 @@ const TableDrivers = ({ title, captions, data, updateData }) => {
     })
   }
 
+  const isValid = (data) => {
+    if (!data || !Array.isArray(data) || data.length === 0) return false;
+
+    const captions = [
+      "driverName",
+      "callsTotal",
+      "faturado",
+      "faturadoPorcentagem",
+      "ganhosPresenciais",
+      "ganhosPresenciaisPorcentagem",
+      "total"
+    ];
+
+    return Object.keys(data[0]).join('') === captions.join('');
+  }
+
   const filter = () => {
     const newData = data.filter((driver) => {
       let nameIsValid = true, typeIsValid = true;
@@ -159,7 +175,7 @@ const TableDrivers = ({ title, captions, data, updateData }) => {
         </Table>
       </CardBody>
 
-      <SpreadsheetImport isOpen={isOpen} setIsOpen={setIsOpen} onSubmit={onSubmit} />
+      <SpreadsheetImport isOpen={isOpen} setIsOpen={setIsOpen} onSubmit={onSubmit} isValid={isValid} />
       <ModalRegisterDriver isOpen={isOpenModal} onClose={() => setIsOpenModal(false)} onUpdate={updateData} />
     </Card>
   );

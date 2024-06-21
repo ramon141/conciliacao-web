@@ -23,19 +23,20 @@ const Invoices = ({ title, data }) => {
       </CardHeader>
       <CardBody>
         <Flex direction='column' w='100%'>
-          {data.map((row) => {
+          {data.map((row, idx) => {
             return (
               <InvoicesRow
-                  name={row.name}
-                  cpfcnpj={row.cpfcnpj}
-                  phone={row.phone}
-                  date={row.date}
-                  payment_method={row.payment_method}
-                  type={row.type}
-                  description={row.description}
-                  product={row.product}
-                  quantity={row.quantity}
-                  total={row.total}
+                key={idx}
+                name={row.name}
+                cpfcnpj={row.cpfcnpj}
+                phone={row.phone}
+                date={row.date}
+                payment_method={row.payment_method}
+                type={row.type}
+                description={row.description}
+                product={row.product}
+                quantity={row.quantity}
+                total={row.total}
               />
             );
           })}

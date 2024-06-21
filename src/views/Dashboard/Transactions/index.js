@@ -13,29 +13,49 @@ import moment from "moment";
 import { DriverAPI } from "../../../api/Driver";
 import { useParams } from "react-router-dom/cjs/react-router-dom";
 import { formatNumberToMoney } from "../../../utils/formatNumberToMoney";
+import { TransactionsAPI } from '../../../api/Transactions';
+import { EnterpriseAPI } from '../../../api/Enterprise';
 
 function Billing() {
-    const {id} = useParams();
-    const [userData, setUserData] = useState({});
-    const [transactions, setTransactions] = useState([]);
+  const { id } = useParams();
+  const type = location.href.split('/').pop();
+  const [userData, setUserData] = useState({});
+  const [transactions, setTransactions] = useState([]);
 
-    useEffect(() => {
-        DriverAPI.get(id).then((response) => {
-            const {transactions, ...userData} = response.data;
+  const [range, setRange] = useState({
+    startDate: moment().startOf('week').format('YYYY-MM-DD'),
+    endDate: moment().endOf('week').format('YYYY-MM-DD'),
+  });
 
-            setUserData(userData);
-            setTransactions(transactions);
-        })
-    }, []);
+  useEffect(() => {
+    if (type === 'driver') {
+      DriverAPI.get(id).then((response) => {
+        const { transactions, ...userData } = response.data;
 
-    const updateTransaction = (e) => {
-        DriverAPI.get(id).then((response) => {
-            const {transactions, ...userData} = response.data;
-
-            setUserData(userData);
-            setTransactions(transactions);
-        })
+        setUserData(userData);
+      })
+    } else {
+      EnterpriseAPI.get(id).then((response) => {
+        const { transactions, ...userData } = response.data;
+        setUserData(userData);
+      })
     }
+  }, []);
+
+  useEffect(() => {
+    TransactionsAPI.getFilterDate(id, type + 's', range.startDate, range.endDate).then((response) => {
+      setTransactions(response.data);
+    })
+  }, [range]);
+
+  const updateTransaction = (e) => {
+    DriverAPI.get(id).then((response) => {
+      const { transactions, ...userData } = response.data;
+
+      setUserData(userData);
+      setTransactions(transactions);
+    })
+  }
 
   return (
     <Flex direction='column' pt={{ base: "120px", md: "75px" }}>
@@ -70,12 +90,12 @@ function Billing() {
                 />
               }
             />
-              <PaymentStatistics
-                  icon={<Icon h={"24px"} w={"24px"} color='white' as={userData.balance > 0 ? FaArrowUp : FaArrowDown} />}
-                  title={"Saldo"}
-                  description={userData.balance > 0? "Você deve pagar" : "Você deve receber"}
-                  amount={formatNumberToMoney(userData.balance)}
-              />
+            <PaymentStatistics
+              icon={<Icon h={"24px"} w={"24px"} color='white' as={userData.balance > 0 ? FaArrowUp : FaArrowDown} />}
+              title={"Saldo"}
+              description={userData.balance > 0 ? "Você deve pagar" : "Você deve receber"}
+              amount={formatNumberToMoney(userData.balance)}
+            />
             <PaymentStatistics
               icon={<Icon h={"24px"} w={"24px"} color='white' as={FaWallet} />}
               title={"Total Pago"}
@@ -98,8 +118,8 @@ function Billing() {
       <Grid templateColumns={{ sm: "1fr", lg: "1fr" }} style={{ gap: 24 }}>
         <Transactions
           title={"Transações"}
-          dateStart={moment()}
-          dateEnd={moment().add(10, 'days')}
+          range={range}
+          setRange={setRange}
           transactions={transactions}
         />
       </Grid>

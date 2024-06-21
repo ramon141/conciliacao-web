@@ -6,10 +6,10 @@ import CardBody from "components/Card/CardBody";
 import CardHeader from "components/Card/CardHeader";
 import React from "react";
 import { FaFacebook, FaInstagram, FaTwitter } from "react-icons/fa";
-import {DriverAPI} from "../../../../api/Driver";
-import {toast} from "react-toastify";
+import { DriverAPI } from "../../../../api/Driver";
+import { toast } from "react-toastify";
 import Phone from "../../../../components/InputMaks/Phone";
-import {EnterpriseAPI} from "../../../../api/Enterprise";
+import { EnterpriseAPI } from "../../../../api/Enterprise";
 
 const ProfileInformation = ({
   title,
@@ -28,15 +28,15 @@ const ProfileInformation = ({
 
   const handleSubmit = (e) => {
     const data = {
-      email,
+      email: email || undefined,
       phone: phone.replace(/[^\d]+/g, '')
     };
 
-    if(type === 'driver') {
+    if (type === 'driver') {
       DriverAPI.patch(name, data).then((response) => {
         toast.success('Usuário atualizado com sucesso!');
       })
-    } else if(type === 'enterprise') {
+    } else if (type === 'enterprise') {
       EnterpriseAPI.patch(id, data).then((response) => {
         toast.success('Empresa atualizada com sucesso!');
       })
@@ -70,15 +70,15 @@ const ProfileInformation = ({
             Telefone
           </FormLabel>
           <Phone
-              height={50}
-              min="1"
-              value={phone}
-              placeholder='(99) 99999-9999'
-              fontSize='sm'
-              ms='4px'
-              borderRadius='15px'
-              mb='24px'
-              onChange={(e) => setPhone(e.target.value)}
+            height={50}
+            min="1"
+            value={phone}
+            placeholder='(99) 99999-9999'
+            fontSize='sm'
+            ms='4px'
+            borderRadius='15px'
+            mb='24px'
+            onChange={(e) => setPhone(e.target.value)}
           />
           <Button
             type='submit'

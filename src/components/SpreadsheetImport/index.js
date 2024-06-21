@@ -13,8 +13,9 @@ import {
 import * as XLSX from 'xlsx';
 import { FaFileExcel } from 'react-icons/fa';
 import moment from 'moment';
+import { toast } from 'react-toastify';
 
-const SpreadsheetImport = ({ isOpen, setIsOpen, onSubmit }) => {
+const SpreadsheetImport = ({ isOpen, setIsOpen, onSubmit, isValid = () => true }) => {
     const [startDate, setStartDate] = useState(moment().startOf('week').format('YYYY-MM-DD'));
     const [endDate, setEndDate] = useState(moment().endOf('week').format('YYYY-MM-DD'));
     const [file, setFile] = useState(null);
@@ -36,13 +37,16 @@ const SpreadsheetImport = ({ isOpen, setIsOpen, onSubmit }) => {
             const worksheet = workbook.Sheets[sheetName];
             const json = XLSX.utils.sheet_to_json(worksheet);
 
-            onSubmit({
-                start: startDate,
-                end: endDate,
-                data: json
-            });
-
-            onClose();
+            if (!isValid(json)) {
+                toast.error('A planilha não é valida');
+            } else {
+                onSubmit({
+                    start: startDate,
+                    end: endDate,
+                    data: json
+                });
+                onClose();
+            }
         };
 
         reader.readAsArrayBuffer(file);

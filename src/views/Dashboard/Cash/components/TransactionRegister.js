@@ -19,17 +19,17 @@ import Card from "components/Card/Card.js";
 import CardBody from "components/Card/CardBody.js";
 import CardHeader from "components/Card/CardHeader.js";
 import { WalletIcon } from "components/Icons/Icons";
-import React, {useState} from "react";
-import {TransactionsAPI} from "../../../../api/Transactions";
-import {useParams} from "react-router-dom/cjs/react-router-dom";
+import React, { useState } from "react";
+import { TransactionsAPI } from "../../../../api/Transactions";
+import { useParams } from "react-router-dom/cjs/react-router-dom";
 import moment from "moment";
-import {toast} from "react-toastify";
+import { toast } from "react-toastify";
 import Money from "../../../../components/InputMaks/Money";
-import {CashAPI} from "../../../../api/Cash";
+import { CashAPI } from "../../../../api/Cash";
 
 const TransactionRegister = ({ title, updateTransaction }) => {
   //Driver or enterprise
-  const {type: userTransactionType, id} = useParams();
+  const { type: userTransactionType, id } = useParams();
 
   const iconTeal = useColorModeValue("teal.300", "teal.300");
   const textColor = useColorModeValue("gray.700", "white");
@@ -52,13 +52,13 @@ const TransactionRegister = ({ title, updateTransaction }) => {
     };
 
     CashAPI.post(data)
-        .then((response) => {
-          toast.success('Transação cadastrada com sucesso!');
-          updateTransaction();
-        })
-        .catch((response) => {
-          toast.error('Falha ao cadastrar');
-        })
+      .then((response) => {
+        toast.success('Transação cadastrada com sucesso!');
+        updateTransaction();
+      })
+      .catch((response) => {
+        toast.error('Falha ao cadastrar');
+      })
   }
 
   return (
@@ -86,7 +86,7 @@ const TransactionRegister = ({ title, updateTransaction }) => {
             bg='transparent'
             borderRadius='15px'
             width='100%'
-            align='center' ci>
+            align='center'>
             <FormControl>
               <FormLabel ms='4px' fontSize='sm' fontWeight='bold'>
                 Valor
@@ -114,10 +114,10 @@ const TransactionRegister = ({ title, updateTransaction }) => {
                 Meio de Pagamento
               </FormLabel>
               <Select
-                  placeholder='Clique aqui para selecionar'
-                  height={50}
-                  value={paymentMethod}
-                  onChange={(e) => setPaymentMethod(e.target.value)}
+                placeholder='Clique aqui para selecionar'
+                height={50}
+                value={paymentMethod}
+                onChange={(e) => setPaymentMethod(e.target.value)}
               >
                 <option value='pix'>Pix</option>
                 <option value='especie'>Espécie</option>
@@ -126,21 +126,21 @@ const TransactionRegister = ({ title, updateTransaction }) => {
           </Flex>
 
           <Flex
-              flex={1}
-              p='16px'
-              bg='transparent'
-              borderRadius='15px'
-              width='100%'
-              align='center'>
+            flex={1}
+            p='16px'
+            bg='transparent'
+            borderRadius='15px'
+            width='100%'
+            align='center'>
             <FormControl>
               <FormLabel ms='4px' fontSize='sm' fontWeight='bold'>
                 Tipo de Transação
               </FormLabel>
               <Select
-                  placeholder='Clique aqui para selecionar'
-                  height={50}
-                  value={type}
-                  onChange={(e) => setType(e.target.value)}
+                placeholder='Clique aqui para selecionar'
+                height={50}
+                value={type}
+                onChange={(e) => setType(e.target.value)}
               >
                 <option value='input'>Recebendo</option>
                 <option value='output'>Pagando</option>

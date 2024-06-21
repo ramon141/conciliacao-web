@@ -2,43 +2,43 @@
 import { Flex, Grid, useColorModeValue } from "@chakra-ui/react";
 import avatar4 from "assets/img/avatars/avatar4.png";
 import ProfileBgImage from "assets/img/ProfileBackground.png";
-import React, {useEffect, useState} from "react";
+import React, { useEffect, useState } from "react";
 import { FaCube, FaPenFancy } from "react-icons/fa";
 import { IoDocumentsSharp } from "react-icons/io5";
 import Conversations from "./components/Conversations";
 import Header from "./components/Header";
 import PlatformSettings from "./components/PlatformSettings";
 import ProfileInformation from "./components/ProfileInformation";
-import {useParams} from "react-router-dom/cjs/react-router-dom";
-import {DriverAPI} from "../../../api/Driver";
-import {EnterpriseAPI} from "../../../api/Enterprise";
+import { useParams } from "react-router-dom/cjs/react-router-dom";
+import { DriverAPI } from "../../../api/Driver";
+import { EnterpriseAPI } from "../../../api/Enterprise";
 
 function Profile() {
 
-    const { id, type } = useParams();
-    const [email, setEmail] = useState('');
-    const [phone, setPhone] = useState('');
-    const [userData, setUserData] = useState({});
+  const { id, type } = useParams();
+  const [email, setEmail] = useState('');
+  const [phone, setPhone] = useState('');
+  const [userData, setUserData] = useState({});
 
-    useEffect(() => {
-        if(type === 'driver') {
-            DriverAPI.get(id).then((response) => {
-                const {email, phone, ...userData} = response.data;
+  useEffect(() => {
+    if (type === 'driver') {
+      DriverAPI.get(id).then((response) => {
+        const { email, phone, ...userData } = response.data;
 
-                setEmail(email);
-                setPhone(phone);
-                setUserData(userData);
-            })
-        } else if(type === 'enterprise'){
-            EnterpriseAPI.get(id).then((response) => {
-                const {email, phone, ...userData} = response.data;
+        setEmail(email);
+        setPhone(phone);
+        setUserData(userData);
+      })
+    } else if (type === 'enterprise') {
+      EnterpriseAPI.get(id).then((response) => {
+        const { email, phone, ...userData } = response.data;
 
-                setEmail(email);
-                setPhone(phone);
-                setUserData(userData);
-            })
-        }
-    }, [type]);
+        setEmail(email);
+        setPhone(phone);
+        setUserData(userData);
+      })
+    }
+  }, [type]);
 
   const bgProfile = useColorModeValue(
     "hsla(0,0%,100%,.8)",
@@ -61,7 +61,7 @@ function Profile() {
       />
       <Grid templateColumns={{ sm: "1fr", xl: "repeat(2, 1fr)" }} gap='22px'>
         <PlatformSettings
-          title={"Configurações"}
+          title={"Configurações (Em breve)"}
         />
         <ProfileInformation
           title={"Editar Informações"}

@@ -47,7 +47,7 @@ const CardIformation = ({
           </Flex>
 
           <Flex textAlign={'center'} style={{ textAlign: 'center' }}>
-            <Box borderRadius={'50%'} width={50} backgroundColor={'rgba(0,0,0,0.23)'}>
+            <Box borderRadius={'50%'} backgroundColor={'rgba(0,0,0,0.23)'}>
               <ProfileIcon w={100} h={100} color="gray.100" />
             </Box>
           </Flex>

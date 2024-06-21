@@ -1,7 +1,19 @@
 import api from './axios';
 
-function get(driverName){
+function get(driverName) {
     return api.get(`/drivers/${encodeURI(name)}`);
+}
+
+function getFilterDate(id, type, dateInit, dateEnd) {
+    const filter = {
+        where: {
+            date: {
+                between: [dateInit, dateEnd]
+            }
+        }
+    };
+
+    return api.get(`/${type}/${encodeURI(id)}/transactions?filter=${JSON.stringify(filter)}`);
 }
 
 function post(data) {
@@ -9,5 +21,5 @@ function post(data) {
 }
 
 export const TransactionsAPI = {
-    get, post
+    get, post, getFilterDate
 };

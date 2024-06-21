@@ -6,7 +6,7 @@ import CardBody from "components/Card/CardBody.js";
 import CardHeader from "components/Card/CardHeader.js";
 import TransactionRow from "components/Tables/TransactionRow";
 import React from "react";
-import {FaArrowDown, FaArrowUp, FaRegCalendarAlt} from "react-icons/fa";
+import { FaArrowDown, FaArrowUp, FaRegCalendarAlt } from "react-icons/fa";
 
 const Transactions = ({
   title,
@@ -64,17 +64,17 @@ const Transactions = ({
       </CardHeader>
       <CardBody>
         <Flex direction='column' w='100%'>
-          {transactions.map((row) => {
+          {transactions.map((row, idx) => {
             return (
               <TransactionRow
-                name={`${
-                  row.input_or_output === 'input'? 'Recebendo pagamento' : 'Fazendo pagamento'
-                }`}
+                key={idx}
+                name={`${row.input_or_output === 'input' ? 'Recebendo pagamento' : 'Fazendo pagamento'
+                  }`}
                 input_or_output={row.input_or_output}
                 type={row.type}
                 price={row.value}
                 paymentMethod={row.payment_method}
-                color={row.input_or_output === 'input'? "green.400" : "red.400"}
+                color={row.input_or_output === 'input' ? "green.400" : "red.400"}
               />
             );
           })}

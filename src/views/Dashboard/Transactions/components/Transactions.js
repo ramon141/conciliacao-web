@@ -6,13 +6,13 @@ import CardBody from "components/Card/CardBody.js";
 import CardHeader from "components/Card/CardHeader.js";
 import TransactionRow from "components/Tables/TransactionRow";
 import React from "react";
-import {FaArrowDown, FaArrowUp, FaRegCalendarAlt} from "react-icons/fa";
+import { FaArrowDown, FaArrowUp, FaRegCalendarAlt } from "react-icons/fa";
 
 const Transactions = ({
   title,
-  dateStart,
-  dateEnd,
-  transactions
+  transactions,
+  range,
+  setRange
 }) => {
   // Chakra color mode
   const textColor = useColorModeValue("gray.700", "white");
@@ -42,6 +42,8 @@ const Transactions = ({
               <Flex align='center' direction={'row'} textAlign={'center'}>
                 <Input
                   borderRadius='15px'
+                  value={range.startDate}
+                  onChange={e => setRange({ ...range, startDate: e.target.value })}
                   fontSize='sm'
                   type='date'
                   width={'130px'}
@@ -50,6 +52,8 @@ const Transactions = ({
                 />
                 &nbsp;&nbsp;até&nbsp;&nbsp;
                 <Input
+                  value={range.endDate}
+                  onChange={e => setRange({ ...range, endDate: e.target.value })}
                   borderRadius='15px'
                   width={'130px'}
                   fontSize='sm'
@@ -64,18 +68,18 @@ const Transactions = ({
       </CardHeader>
       <CardBody>
         <Flex direction='column' w='100%'>
-          {transactions.map((row) => {
+          {transactions.map((row, idx) => {
             return (
               <TransactionRow
-                name={`${
-                  row.payment_method === 'racer'?
-                      (row.value > 0?
-                        'Você deve pagar referente as corridas da semana' :
-                          'Você deve receber referente as corridas da semana') :
-                      row.type === 'receive' ? 'Recebendo pagamento' : 'Fazendo pagamento'
-                }`}
+                key={idx}
+                name={`${row.payment_method === 'racer' ?
+                  (row.value > 0 ?
+                    'Você deve pagar referente as corridas da semana' :
+                    'Você deve receber referente as corridas da semana') :
+                  row.type === 'receive' ? 'Recebendo pagamento' : 'Fazendo pagamento'
+                  }`}
                 color={
-                  (row.payment_method === 'racer' && row.value < 0) || row.type === 'receive'?
+                  (row.payment_method === 'racer' && row.value < 0) || row.type === 'receive' ?
                     "green.400" : "red.400"
                 }
                 type={row.type}

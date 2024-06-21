@@ -35,18 +35,13 @@ const ActiveUsers = ({ title, data, chart }) => {
             />
             <ChartStatistics
               title={"Gasto no mês"}
-              amount={formatNumberToMoney(data.inCash, false)}
+              amount={formatNumberToMoney(data.spending, false)}
               icon={<DonateIcon h={"20px"} w={"20px"} color={iconBoxInside} />}
             />
             <ChartStatistics
               title={"Ganhos no mês"}
-              amount={formatNumberToMoney(data.inCash, false)}
+              amount={formatNumberToMoney(data.receivedValue, false)}
               icon={<ProfitIcon h={"15px"} w={"15px"} color={iconBoxInside} />}
-            />
-            <ChartStatistics
-              title={"Items"}
-              amount={formatNumberToMoney(data.inCash, false)}
-              icon={<StatsIcon h={"15px"} w={"15px"} color={iconBoxInside} />}
             />
           </SimpleGrid>
         </Flex>

@@ -23,9 +23,10 @@ const Invoices = ({ title, data }) => {
       </CardHeader>
       <CardBody>
         <Flex direction='column' w='100%'>
-          {data.map((row) => {
+          {data.map((row, idx) => {
             return (
               <InvoicesRow
+                key={idx}
                 date={row.date}
                 code={row.code}
                 price={row.price}
