@@ -2,7 +2,7 @@
 import { Box, Flex, Grid, Icon } from "@chakra-ui/react";
 // Assets
 import BackgroundCard1 from "assets/img/BackgroundCard1.png";
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useMemo, useState } from "react";
 import { FaArrowDown, FaArrowUp, FaPaypal, FaWallet } from "react-icons/fa";
 import { RiMastercardFill } from "react-icons/ri";
 import DriverCard from "./components/CardInformation";
@@ -22,12 +22,26 @@ function Billing() {
   const [userData, setUserData] = useState({});
   const [transactions, setTransactions] = useState([]);
 
+  const color = useMemo(() => {
+    return userData.balance > 0 ? '#DB5461' : '#4FD1C5'
+  }, [userData]);
+
   const [range, setRange] = useState({
     startDate: moment().startOf('week').format('YYYY-MM-DD'),
     endDate: moment().endOf('week').format('YYYY-MM-DD'),
   });
 
   useEffect(() => {
+    updateUser();
+  }, []);
+
+  const updateTransaction = useCallback(() => {
+    TransactionsAPI.getFilterDate(id, type + 's', range.startDate, range.endDate).then((response) => {
+      setTransactions(response.data);
+    })
+  }, [id, type, range]);
+
+  const updateUser = useCallback(() => {
     if (type === 'driver') {
       DriverAPI.get(id).then((response) => {
         const { transactions, ...userData } = response.data;
@@ -40,22 +54,16 @@ function Billing() {
         setUserData(userData);
       })
     }
-  }, []);
+  }, [id]);
+
+  const onSubmit = () => {
+    updateUser();
+    updateTransaction();
+  }
 
   useEffect(() => {
-    TransactionsAPI.getFilterDate(id, type + 's', range.startDate, range.endDate).then((response) => {
-      setTransactions(response.data);
-    })
+    updateTransaction();
   }, [range]);
-
-  const updateTransaction = (e) => {
-    DriverAPI.get(id).then((response) => {
-      const { transactions, ...userData } = response.data;
-
-      setUserData(userData);
-      setTransactions(transactions);
-    })
-  }
 
   return (
     <Flex direction='column' pt={{ base: "120px", md: "75px" }}>
@@ -93,25 +101,28 @@ function Billing() {
             <PaymentStatistics
               icon={<Icon h={"24px"} w={"24px"} color='white' as={userData.balance > 0 ? FaArrowUp : FaArrowDown} />}
               title={"Saldo"}
+              color={color}
               description={userData.balance > 0 ? "Você deve pagar" : "Você deve receber"}
               amount={formatNumberToMoney(userData.balance)}
             />
             <PaymentStatistics
               icon={<Icon h={"24px"} w={"24px"} color='white' as={FaWallet} />}
               title={"Total Pago"}
+              color={'teal.300'}
               description={"Valor total pago a este motorista"}
               amount={formatNumberToMoney(userData.totalPay)}
             />
             <PaymentStatistics
               icon={<Icon h={"24px"} w={"24px"} color='white' as={FaPaypal} />}
               title={"Recebido"}
+              color={'teal.300'}
               description={"Total Recebido do motorista"}
               amount={formatNumberToMoney(userData.totalReceive)}
             />
           </Grid>
           <TransactionRegister
             title={"Transação"}
-            updateTransaction={updateTransaction}
+            onSubmit={onSubmit}
           />
         </Box>
       </Grid>

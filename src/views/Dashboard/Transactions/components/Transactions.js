@@ -6,7 +6,8 @@ import CardBody from "components/Card/CardBody.js";
 import CardHeader from "components/Card/CardHeader.js";
 import TransactionRow from "components/Tables/TransactionRow";
 import React from "react";
-import { FaArrowDown, FaArrowUp, FaRegCalendarAlt } from "react-icons/fa";
+import { getColorTransaction } from "utils/transaction";
+import { getMessageTransaction } from "utils/transaction";
 
 const Transactions = ({
   title,
@@ -72,16 +73,8 @@ const Transactions = ({
             return (
               <TransactionRow
                 key={idx}
-                name={`${row.payment_method === 'racer' ?
-                  (row.value > 0 ?
-                    'Você deve pagar referente as corridas da semana' :
-                    'Você deve receber referente as corridas da semana') :
-                  row.type === 'receive' ? 'Recebendo pagamento' : 'Fazendo pagamento'
-                  }`}
-                color={
-                  (row.payment_method === 'racer' && row.value < 0) || row.type === 'receive' ?
-                    "green.400" : "red.400"
-                }
+                name={getMessageTransaction(row)}
+                color={getColorTransaction(row)}
                 type={row.type}
                 price={row.value}
                 paymentMethod={row.payment_method}

@@ -19,15 +19,15 @@ import Card from "components/Card/Card.js";
 import CardBody from "components/Card/CardBody.js";
 import CardHeader from "components/Card/CardHeader.js";
 import { WalletIcon } from "components/Icons/Icons";
-import React, {useState} from "react";
-import {TransactionsAPI} from "../../../../api/Transactions";
-import {useParams} from "react-router-dom/cjs/react-router-dom";
+import React, { useState } from "react";
+import { TransactionsAPI } from "../../../../api/Transactions";
+import { useParams } from "react-router-dom/cjs/react-router-dom";
 import moment from "moment";
-import {toast} from "react-toastify";
+import { toast } from "react-toastify";
 
-const TransactionRegister = ({ title, updateTransaction }) => {
+const TransactionRegister = ({ title, onSubmit }) => {
   //Driver or enterprise
-  const {type: userTransactionType, id} = useParams();
+  const { type: userTransactionType, id } = useParams();
 
   const iconTeal = useColorModeValue("teal.300", "teal.300");
   const textColor = useColorModeValue("gray.700", "white");
@@ -42,6 +42,8 @@ const TransactionRegister = ({ title, updateTransaction }) => {
   const [type, setType] = useState('');
 
   const handleSubmit = (e) => {
+    e.preventDefault();
+
     const data = {
       value: parseFloat(value),
       payment_method: paymentMethod,
@@ -49,19 +51,25 @@ const TransactionRegister = ({ title, updateTransaction }) => {
       date: moment().toISOString()
     };
 
-    if(userTransactionType === 'driver')
-      data.driverId = id;
-    else if(userTransactionType === 'enterprise')
-      data.enterpriseId = id;
+    if (userTransactionType === 'driver')
+      data.driverId = encodeURI(id);
+    else if (userTransactionType === 'enterprise')
+      data.enterpriseId = encodeURI(id);
+
+    if (type === 'acerto') {
+      data.type = 'pay';
+      data.payment_method = 'acerto';
+    }
 
     TransactionsAPI.post(data)
-        .then((response) => {
-          toast.success('Transação cadastrada com sucesso!');
-          updateTransaction();
-        })
-        .catch((response) => {
-          toast.error('Falha ao cadastrar');
-        })
+      .then((response) => {
+        toast.success('Transação cadastrada com sucesso!');
+        onSubmit && onSubmit();
+      })
+      .catch((response) => {
+        toast.error('Falha ao cadastrar');
+      })
+
   }
 
   return (
@@ -71,7 +79,7 @@ const TransactionRegister = ({ title, updateTransaction }) => {
           <Text fontSize='lg' color={textColor} fontWeight='bold'>
             {title}
           </Text>
-          <Button bg={bgButton} color='white' fontSize='xs' variant='no-hover' onClick={handleSubmit}>
+          <Button bg={bgButton} color='white' fontSize='xs' variant='no-hover' type="submit" onClick={handleSubmit}>
             REGISTRAR TRANSAÇÃO
           </Button>
         </Flex>
@@ -100,12 +108,13 @@ const TransactionRegister = ({ title, updateTransaction }) => {
                     <WalletIcon color='green.300' />
                   </InputLeftElement>
                   <Input
-                      value={value}
-                      onChange={(e) => setValue(e.target.value)}
-                      height={50}
-                      min="1"
-                      type="number"
-                      placeholder='Valor'
+                    required
+                    value={value}
+                    onChange={(e) => setValue(e.target.value)}
+                    height={50}
+                    min="1"
+                    type="number"
+                    placeholder='Valor'
                   />
                 </InputGroup>
               </Stack>
@@ -121,44 +130,49 @@ const TransactionRegister = ({ title, updateTransaction }) => {
             align='center'>
             <FormControl>
               <FormLabel ms='4px' fontSize='sm' fontWeight='bold'>
-                Meio de Pagamento
+                Tipo de Transação
               </FormLabel>
               <Select
+                required
+                placeholder='Clique aqui para selecionar'
+                height={50}
+                value={type}
+                onChange={(e) => setType(e.target.value)}
+              >
+                <option value='receive'>Recebendo</option>
+                <option value='pay'>Pagando</option>
+                <option value='acerto'>Acerto</option>
+              </Select>
+            </FormControl>
+
+          </Flex>
+
+          {
+            type !== 'acerto' &&
+            <Flex
+              flex={1}
+              p='16px'
+              bg='transparent'
+              borderRadius='15px'
+              width='100%'
+              align='center'>
+              <FormControl>
+                <FormLabel ms='4px' fontSize='sm' fontWeight='bold'>
+                  Meio de Pagamento
+                </FormLabel>
+                <Select
+                  required
                   placeholder='Clique aqui para selecionar'
                   height={50}
                   value={paymentMethod}
                   onChange={(e) => setPaymentMethod(e.target.value)}
-              >
-                <option value='pix'>Pix</option>
-                <option value='especie'>Espécie</option>
-              </Select>
-            </FormControl>
-          </Flex>
-
-          <Flex
-            flex={1}
-            p='16px'
-            bg='transparent'
-            borderRadius='15px'
-            width='100%'
-            align='center'>
-            <FormControl>
-              <FormLabel ms='4px' fontSize='sm' fontWeight='bold'>
-                Tipo de Transação
-              </FormLabel>
-              <Select
-                  placeholder='Clique aqui para selecionar'
-                  height={50}
-                  value={type}
-                  onChange={(e) => setType(e.target.value)}
-              >
-                <option value='receive'>Recebendo</option>
-                <option value='pay'>Pagando</option>
-              </Select>
-            </FormControl>
-
-          </Flex>
-
+                >
+                  <option value='pix'>Pix</option>
+                  <option value='especie'>Espécie</option>
+                </Select>
+              </FormControl>
+            </Flex>
+          }
         </Flex>
       </CardBody>
     </Card>

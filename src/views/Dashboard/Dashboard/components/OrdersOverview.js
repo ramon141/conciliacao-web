@@ -6,11 +6,10 @@ import CardBody from "components/Card/CardBody.js";
 import CardHeader from "components/Card/CardHeader.js";
 import TimelineRow from "components/Tables/TimelineRow";
 import React from "react";
+import { getMessageTransaction } from "utils/transaction";
 
 const OrdersOverview = ({ title, amount, data }) => {
   const textColor = useColorModeValue("gray.700", "white");
-
-  console.log(data)
 
   return (
     <Card maxH='100%'>
@@ -27,12 +26,7 @@ const OrdersOverview = ({ title, amount, data }) => {
             return (
               <TimelineRow
                 key={row.id}
-                title={`${row.payment_method === 'racer' ?
-                    (row.value > 0 ?
-                      'Você deve pagar referente as corridas da semana' :
-                      'Você deve receber referente as corridas da semana') :
-                    row.type === 'receive' ? 'Recebendo pagamento' : 'Fazendo pagamento'
-                  }`}
+                title={getMessageTransaction(row)}
                 type={row.type}
                 value={row.value}
                 paymentMethod={row.payment_method}
