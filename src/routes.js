@@ -75,7 +75,7 @@ var dashRoutes = [
         layout: "/admin",
       },
       {
-        path: "/signup",
+        path: "/",
         name: "Sair",
         icon: <RocketIcon color="inherit" />,
         secondaryNavbar: true,

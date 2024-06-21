@@ -48,7 +48,7 @@ function Sidebar(props) {
           borderRadius={sidebarRadius}
         >
           <SidebarContent routes={routes}
-            logoText={"CONCIALIAÇÃO"}
+            logoText={"CONCILIAÇÃO"}
             display="none"
             sidebarVariant={sidebarVariant}
           />

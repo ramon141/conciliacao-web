@@ -27,8 +27,8 @@ import './theme/styles.css';
 ReactDOM.render(
   <HashRouter>
     <Switch>
-      <Route path={`/auth`} component={AuthLayout} />
       <Route path={`/admin`} component={AdminLayout} />
+      <Route path={`/`} component={AuthLayout} />
       <Redirect from={`/`} to="/admin/dashboard" />
     </Switch>
   </HashRouter>,

@@ -10,7 +10,7 @@ import '@fontsource/roboto/400.css';
 import '@fontsource/roboto/500.css';
 import '@fontsource/roboto/700.css';
 import theme from 'theme/theme.js';
-import {ToastContainer} from "react-toastify";
+import { ToastContainer } from "react-toastify";
 
 export default function Pages(props) {
 	const { ...rest } = props;
@@ -19,7 +19,7 @@ export default function Pages(props) {
 	React.useEffect(() => {
 		document.body.style.overflow = 'unset';
 		// Specify how to clean up after this effect:
-		return function cleanup() {};
+		return function cleanup() { };
 	});
 	const getActiveRoute = (routes) => {
 		let activeRoute = 'Default Brand Text';
@@ -69,7 +69,7 @@ export default function Pages(props) {
 				return getRoutes(prop.views);
 			}
 			if (prop.layout === '/auth') {
-				return <Route path={prop.layout + prop.path} component={prop.component} key={key} />;
+				return <Route path={prop.path} component={prop.component} key={key} />;
 			} else {
 				return null;
 			}

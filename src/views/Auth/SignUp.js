@@ -15,28 +15,31 @@ import {
 } from "@chakra-ui/react";
 // Assets
 import BgSignUp from "assets/img/BgSignUp.png";
-import React, {useState} from "react";
-import { FaApple, FaFacebook, FaGoogle } from "react-icons/fa";
-import {UserAPI} from "../../api/User";
-import {toast} from "react-toastify";
+import React, { useState } from "react";
+import { UserAPI } from "../../api/User";
+import { toast } from "react-toastify";
+import { useHistory } from "react-router-dom/cjs/react-router-dom";
 
 function SignUp() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
+  const history = useHistory();
   const textColor = useColorModeValue("gray.700", "white");
   const bgColor = useColorModeValue("white", "gray.700");
 
-  const login = () => {
-    UserAPI.login({email, password})
-        .then(response => {
-          console.log(response)
-        })
-        .catch(response => {
-          console.log("masod")
-          toast.error('Credenciais inválidas');
-        })
+  localStorage.clear();
 
+  const login = () => {
+    UserAPI.login({ email, password })
+      .then(response => {
+        localStorage.setItem('token', response.data.token);
+        history.push('/admin')
+      })
+      .catch(response => {
+        console.log("masod")
+        toast.error('Credenciais inválidas');
+      })
   }
 
   return (
