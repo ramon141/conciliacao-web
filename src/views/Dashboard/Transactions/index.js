@@ -2,26 +2,17 @@
 import { Box, Flex, Grid, Icon } from "@chakra-ui/react";
 // Assets
 import BackgroundCard1 from "assets/img/BackgroundCard1.png";
-import { MastercardIcon, VisaIcon } from "components/Icons/Icons";
-import React, {useEffect, useState} from "react";
-import {FaArrowDown, FaArrowUp, FaPaypal, FaWallet} from "react-icons/fa";
+import React, { useEffect, useState } from "react";
+import { FaArrowDown, FaArrowUp, FaPaypal, FaWallet } from "react-icons/fa";
 import { RiMastercardFill } from "react-icons/ri";
-import {
-  billingData,
-  invoicesData,
-  newestTransactions,
-  olderTransactions,
-} from "variables/general";
-import BillingInformation from "./components/BillingInformation";
-import DriverCard from "./components/CreditCard";
-import Invoices from "./components/Invoices";
+import DriverCard from "./components/CardInformation";
 import TransactionRegister from "./components/TransactionRegister";
 import PaymentStatistics from "./components/PaymentStatistics";
 import Transactions from "./components/Transactions";
 import moment from "moment";
-import {DriverAPI} from "../../../api/Driver";
-import {useParams} from "react-router-dom/cjs/react-router-dom";
-import {formatNumberToMoney} from "../../../utils/formatNumberToMoney";
+import { DriverAPI } from "../../../api/Driver";
+import { useParams } from "react-router-dom/cjs/react-router-dom";
+import { formatNumberToMoney } from "../../../utils/formatNumberToMoney";
 
 function Billing() {
     const {id} = useParams();

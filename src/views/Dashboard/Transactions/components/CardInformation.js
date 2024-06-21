@@ -6,13 +6,10 @@ import CardBody from "components/Card/CardBody.js";
 import { ProfileIcon } from "components/Icons/Icons";
 import React from "react";
 
-const DriverCard = ({
+const CardIformation = ({
   backgroundImage,
-  title,
-  icon,
   number,
-  validity,
-  cvv,
+  validity
 }) => {
   return (
     <Card
@@ -60,4 +57,4 @@ const DriverCard = ({
   );
 };
 
-export default DriverCard;
+export default CardIformation;

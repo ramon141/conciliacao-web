@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import {
     Button,
     Modal,
@@ -21,7 +21,12 @@ const SpreadsheetImport = ({ isOpen, setIsOpen, onSubmit }) => {
 
     const fileInputRef = useRef(null);
 
-    const handleFileUpload = () => {
+    const handleFileUpload = (e) => {
+        setFile(e.target.files[0]);
+    };
+
+
+    const handleSubmit = () => {
         const reader = new FileReader();
 
         reader.onload = (event) => {
@@ -41,7 +46,7 @@ const SpreadsheetImport = ({ isOpen, setIsOpen, onSubmit }) => {
         };
 
         reader.readAsArrayBuffer(file);
-    };
+    }
 
     const onClose = () => setIsOpen(false);
 
@@ -135,7 +140,7 @@ const SpreadsheetImport = ({ isOpen, setIsOpen, onSubmit }) => {
                     <Button
                         colorScheme='green'
                         style={{ marginLeft: '10px' }}
-                        onClick={handleFileUpload}
+                        onClick={handleSubmit}
                     >
                         Importar
                     </Button>

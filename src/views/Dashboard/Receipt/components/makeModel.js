@@ -1,94 +1,106 @@
+import moment from 'moment';
 import React from 'react';
-import {getBase64FromUrl} from "../../../../utils/toBase64";
-import moment from "moment";
-import {formatNumberToMoney} from "../../../../utils/formatNumberToMoney";
-import logo from '../../../../assets/icon/logo.png';
+import 'moment/locale/pt-br';
+import { formatNumberToMoney } from 'utils/formatNumberToMoney';
+import logo from '../../../../assets/icon/logo.jpeg';
+import { getBase64FromUrl } from 'utils/toBase64';
 
-const classes = {
+const styles = {
     container: {
-        maxWidth: '600px',
-        margin: '0 auto',
-        border: '2px solid #ccc',
-        padding: '20px',
-        borderRadius: '10px'
+      fontFamily: 'Arial, sans-serif',
+      backgroundColor: '#f0f0f0',
+      margin: 0,
+      padding: '20px',
+    },
+    reciboContainer: {
+      backgroundColor: '#fff',
+      padding: '20px',
+      borderRadius: '8px',
+      maxWidth: '800px',
+      margin: '0 auto',
+      boxShadow: '0 0 10px rgba(0, 0, 0, 0.1)',
     },
     header: {
-        textAlign: 'center',
-        marginBottom: '20px'
+      display: 'flex',
+      alignItems: 'center',
+      borderBottom: '2px solid #000',
+      paddingBottom: '10px',
+      marginBottom: '20px',
     },
-    logo: {
-        textAlign: 'center',
-        marginBottom: '20px'
+    headerImg: {
+      maxWidth: '150px',
+      marginRight: '20px',
     },
-    info: {
-        marginBottom: '20px'
+    headerInfo: {
+      fontSize: '12px',
+      textAlign: 'left',
     },
-    footer: {
-        textAlign: 'center'
-    }
-};
-
-export default async function Model({ name, cpfCnpj, phone, date, paymentMethod, quantity, total, type, description, product }) {
+    headerTitle: {
+      margin: 0,
+      fontSize: '24px',
+    },
+    headerText: {
+      margin: '2px 0',
+    },
+    title: {
+      textAlign: 'center',
+      textTransform: 'uppercase',
+      fontSize: '18px',
+      margin: '20px 0',
+    },
+    content: {
+      textAlign: 'justify',
+      fontSize: '14px',
+      lineHeight: 1.6,
+      margin: '10px 0',
+    },
+    signature: {
+      textAlign: 'center',
+      fontSize: '14px',
+      marginTop: '40px',
+    },
+    signatureBold: {
+      marginTop: '5px',
+      fontWeight: 'bold',
+    },
+  };
+  
+  export default async function Model({ name, cpfCnpj, phone, date, paymentMethod, quantity, total, description, product, type }) {
     const logoUrl = await getBase64FromUrl(logo);
 
-        console.log(name)
-
-    const commonInfo = (
-        <>
-
-            <div style={classes.info}>
-                <p><strong>Nome:</strong> {name}</p>
-                <p><strong>CPF/CNPJ:</strong> {cpfCnpj}</p>
-                <p><strong>Telefone:</strong> {phone}</p>
-                <p><strong>Data:</strong> {moment(date).format('DD/MM/YYYY')}</p>
-                <p><strong>Método de Pagamento:</strong> {paymentMethod}</p>
-            </div>
-        </>
-    );
-
-    const renderProductReceipt = () => (
-        <div style={classes.container}>
-            <div style={classes.logo}>
-                <img src={logoUrl} alt="Logo" width="80"/>
-            </div>
-            <div style={classes.header}>
-                <h1>Recibo de Produto</h1>
-            </div>
-            {commonInfo}
-            <div style={classes.info}>
-                <p><strong>Produto:</strong> {product}</p>
-                <p><strong>Quantidade:</strong> {quantity}</p>
-                <p><strong>Total:</strong> {formatNumberToMoney(total)}</p>
-            </div>
-            <div style={classes.footer}>
-                <p>Este é um recibo de produto gerado automaticamente.</p>
-            </div>
-        </div>
-    );
-
-    const renderServiceReceipt = () => (
-        <div style={classes.container}>
-            <div style={classes.logo}>
-                <img src={logoUrl} alt="Logo" width="80"/>
-            </div>
-            <div style={classes.header}>
-                <h1>Recibo de Serviço</h1>
-            </div>
-            {commonInfo}
-            <div style={classes.info}>
-                <p><strong>Descrição do Serviço:</strong> {description}</p>
-                <p><strong>Total:</strong> {formatNumberToMoney(total)}</p>
-            </div>
-            <div style={classes.footer}>
-                <p>Este é um recibo de serviço gerado automaticamente.</p>
-            </div>
-        </div>
-    );
-
     return (
-        <>
-            {type === 'produto' ? renderProductReceipt() : null}
-            {type === 'servico' ? renderServiceReceipt() : null}
-        </>
+        <div style={styles.container}>
+        <div style={styles.reciboContainer}>
+          <div style={styles.header}>
+            <img src={logoUrl} alt="Logo Juma Entregas" style={styles.headerImg} />
+            <div style={styles.headerInfo}>
+              <h1 style={styles.headerTitle}>Juma Entregas</h1>
+              <p style={styles.headerText}>Serviço de Motoboy</p>
+              <p style={styles.headerText}>CADASTRE-SE NO NOSSO APP OU NO NOSSO SITE:</p>
+              <p style={styles.headerText}>www.jumaentregas.com.br</p>
+              <p style={styles.headerText}>(93) 99110-5060</p>
+              <p style={styles.headerText}>Trav. Professor Carvalho, 81 - Mercadão 2000 - Sala B, Anexo à Drogaria Popular</p>
+            </div>
+          </div>
+          <h2 style={styles.title}>RECIBO</h2>
+          <p style={styles.content}>
+            Pelo presente, eu <strong>LIDIANE SILVA SOUZA MEI - JUMA ENTREGAS SANTARÉM</strong>, inscrito no CNPJ sob nº 44.691.390/0001-69,
+            declaro que RECEBI na data de hoje, o valor de <strong>{formatNumberToMoney(total)}</strong>, por meio de {paymentMethod}, de <strong>{name}</strong>, inscrito no
+            CNPJ sob nº {cpfCnpj}, referente a pagamento {type === 'produto' ? `do produto ${product}, quantidade: ${quantity}` : `do serviço ${description}`}.
+          </p>
+          <p style={styles.content}>
+            Declaro ainda que o valor recebido refere-se a serviços prestados, como atividade autônoma, sem qualquer habitualidade ou subordinação,
+            não caracterizando em qualquer hipótese vínculo de emprego.
+          </p>
+          <p style={styles.content}>
+            Sendo expressão de verdade e sem qualquer coação, firmo o presente.
+          </p>
+          <p style={styles.signature}>Santarém-PA{
+            " " + moment(date).locale('pt-br').format('LL')
+          }</p>
+          <p style={styles.signature}>__________________________________________</p>
+          <p style={{ ...styles.signature, ...styles.signatureBold }}>Lidiane Silva Souza Lima</p>
+        </div>
+      </div>
     );
-}
+  };

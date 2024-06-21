@@ -1,7 +1,7 @@
 // import
 import Dashboard from "views/Dashboard/Dashboard";
 import Driver from "views/Dashboard/Driver";
-import Billing from "views/Dashboard/Billing";
+import Transactions from "views/Dashboard/Transactions";
 import Profile from "views/Dashboard/Profile";
 import SignUp from "views/Auth/SignUp.js";
 
@@ -49,7 +49,7 @@ var dashRoutes = [
     path: "/transaction/:id/:type",
     name: "Transações",
     icon: <EnterpriseIcon color="inherit" />,
-    component: Billing,
+    component: Transactions,
     redirect: true,
     layout: "/admin",
   },
