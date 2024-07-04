@@ -36,7 +36,6 @@ function Billing() {
   }, []);
 
   const updateTransaction = useCallback(() => {
-    console.log('teste');
     TransactionsAPI.getFilterDate(id, type + 's', range.startDate, range.endDate).then((response) => {
       setTransactions(response.data);
     })
@@ -100,10 +99,10 @@ function Billing() {
               }
             />
             <PaymentStatistics
-              icon={<Icon h={"24px"} w={"24px"} color='white' as={userData.balance > 0 ? FaArrowUp : FaArrowDown} />}
+              icon={<Icon h={"24px"} w={"24px"} color='white' as={userData.balance < 0 ? FaArrowUp : FaArrowDown} />}
               title={"Saldo"}
               color={color}
-              description={userData.balance > 0 ? "Você deve pagar" : "Você deve receber"}
+              description={userData.balance < 0 ? "Você deve pagar" : "Você deve receber"}
               amount={formatNumberToMoney(userData.balance)}
             />
             <PaymentStatistics

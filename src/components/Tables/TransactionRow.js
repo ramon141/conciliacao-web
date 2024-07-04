@@ -1,6 +1,6 @@
 import { Box, Flex, Icon, Text, useColorModeValue } from "@chakra-ui/react";
 import React from "react";
-import {FaArrowDown, FaArrowUp} from "react-icons/fa";
+import { FaArrowDown, FaArrowUp } from "react-icons/fa";
 
 function TransactionRow(props) {
   const textColor = useColorModeValue("gray.700", "white");
@@ -20,7 +20,7 @@ function TransactionRow(props) {
           w="35px"
           h="35px"
         >
-          <Icon as={color.startsWith('green') ? FaArrowDown : FaArrowUp} />
+          <Icon as={color.startsWith('green') ? FaArrowUp : FaArrowDown} />
         </Box>
         <Flex direction="column">
           <Text
@@ -35,18 +35,18 @@ function TransactionRow(props) {
             color="gray.400"
             fontWeight="semibold"
           >
-              {paymentMethod === 'pix'?  'Pix' : 'Espécie'}
+            {paymentMethod === 'pix' ? 'Pix' : 'Espécie'}
           </Text>
         </Flex>
       </Flex>
       <Box
-          alignItems={'center'}
-          display={'flex'}
-          color={color}>
+        alignItems={'center'}
+        display={'flex'}
+        color={color}>
         <Text fontSize={{ sm: "md", md: "lg", lg: "md" }} fontWeight="bold">
           {Intl.NumberFormat('pt-BR', {
-              style: 'currency',
-              currency: 'BRL',
+            style: 'currency',
+            currency: 'BRL',
           }).format(Math.abs(price))}
         </Text>
       </Box>

@@ -98,7 +98,7 @@ function TablesTableRow(props) {
       </Td>
       <Td>
         <Badge
-          bg={balance < 0 ? "green.400" : bgStatus}
+          bg={balance > 0 ? "green.400" : bgStatus}
           color={"white"}
           fontSize="16px"
           p="3px 10px"
