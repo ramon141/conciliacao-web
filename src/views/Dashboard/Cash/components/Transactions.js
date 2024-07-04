@@ -10,9 +10,11 @@ import { FaArrowDown, FaArrowUp, FaRegCalendarAlt } from "react-icons/fa";
 
 const Transactions = ({
   title,
-  dateStart,
-  dateEnd,
-  transactions
+  startDate,
+  endDate,
+  transactions,
+  setStartDate,
+  setEndDate
 }) => {
   // Chakra color mode
   const textColor = useColorModeValue("gray.700", "white");
@@ -47,9 +49,13 @@ const Transactions = ({
                   width={'130px'}
                   placeholder='Início'
                   size='sm'
+                  value={startDate}
+                  onChange={(e) => setStartDate(e.target.value)}
                 />
                 &nbsp;&nbsp;até&nbsp;&nbsp;
                 <Input
+                  value={endDate}
+                  onChange={(e) => setEndDate(e.target.value)}
                   borderRadius='15px'
                   width={'130px'}
                   fontSize='sm'

@@ -69,7 +69,6 @@ const SpreadsheetImport = ({ isOpen, setIsOpen, onSubmit, isValid = () => true }
     };
 
     const handleClick = () => {
-        // Quando o box for clicado, simula um clique no input de arquivo
         fileInputRef.current.click();
     };
 

@@ -16,12 +16,12 @@ export const getMessageTransaction = (transaction) => {
 }
 
 export const getColorTransaction = (transaction) => {
-    if (transaction.payment_method === 'acerto')
+    if (transaction.payment_method === 'acerto' || transaction.type === 'receive')
         return "green.400";
     if (transaction.payment_method === 'racer' && transaction.value < 0)
         return "green.400";
-    else
-        return "red.400"
+
+    return "red.400"
 }
 
 export const getIconTransaction = (transaction) => {

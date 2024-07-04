@@ -33,7 +33,7 @@ function TablesTableRow(props) {
     if (type === 'driver')
       history.push(`/admin/profile/${name}/${type}`);
     else if (type === 'enterprise')
-      history.push(`/admin/profile/${id}/${type}`);
+      history.push(`/admin/profile/${name}/${type}`);
   }
 
   const createLinkWhats = () => {

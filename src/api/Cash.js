@@ -1,10 +1,12 @@
 import api from './axios';
 
-function get(){
+function get() {
     return api.get(`/caixa-transactions`);
 }
 
-function informations() {
+function informations({ filter = false }) {
+    if (filter)
+        return api.get(`/caixa-transactions/informations?filter=${JSON.stringify(filter)}`);
     return api.get(`/caixa-transactions/informations`);
 }
 

@@ -14,6 +14,11 @@ api.interceptors.request.use(async config => {
 api.interceptors.response.use(
     (response) => response,
     async (error) => {
+        if (error?.response?.status === 401) {
+            localStorage.clear();
+            window.location.href = '/';
+        }
+
         if (error.code === "ERR_NETWORK")
             error.response = { data: { message: `A API não está respondendo. Certifique-se que ela está aberta no endereço: ${error.config.baseURL}` } };
 

@@ -42,12 +42,18 @@ const EnterpriseList = ({ title, captions, data, updateData }) => {
     setFiltredData(data);
   }, [data]);
 
-  const onSubmit = (e) => {
-    const enterprises = e.validData.filter((i) => i.enterpriseName.toLowerCase() !== 'total');
+  const onSubmit = ({ data, start, end }) => {
+    console.log(data);
+    const remap = data.map((i) => ({
+      enterpriseName: i.Cliente,
+      faturado: i.Faturado
+    }));
+
+    const enterprises = remap.filter((i) => i.enterpriseName.toLowerCase() !== 'total');
 
     ImportAPI.postEnterprises(
-      moment().startOf('week'),
-      moment().endOf('week'),
+      end,
+      start,
       enterprises
     ).then(() => {
       toast.success('Dados importados com sucesso!');
@@ -59,13 +65,15 @@ const EnterpriseList = ({ title, captions, data, updateData }) => {
     if (!data || !Array.isArray(data) || data.length === 0) return false;
 
     const captions = [
-      "driverName",
-      "callsTotal",
-      "faturado",
-      "faturadoPorcentagem",
-      "ganhosPresenciais",
-      "ganhosPresenciaisPorcentagem",
-      "total"
+      "Id",
+      "Cliente",
+      "Dinheiro",
+      "Debito",
+      "Credito",
+      "Pix",
+      "Picpay",
+      "Faturado",
+      "Total"
     ];
 
     return Object.keys(data[0]).join('') === captions.join('');

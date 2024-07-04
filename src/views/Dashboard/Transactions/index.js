@@ -36,6 +36,7 @@ function Billing() {
   }, []);
 
   const updateTransaction = useCallback(() => {
+    console.log('teste');
     TransactionsAPI.getFilterDate(id, type + 's', range.startDate, range.endDate).then((response) => {
       setTransactions(response.data);
     })
@@ -109,14 +110,14 @@ function Billing() {
               icon={<Icon h={"24px"} w={"24px"} color='white' as={FaWallet} />}
               title={"Total Pago"}
               color={'teal.300'}
-              description={"Valor total pago a este motorista"}
+              description={"Valor total pago"}
               amount={formatNumberToMoney(userData.totalPay)}
             />
             <PaymentStatistics
               icon={<Icon h={"24px"} w={"24px"} color='white' as={FaPaypal} />}
               title={"Recebido"}
               color={'teal.300'}
-              description={"Total Recebido do motorista"}
+              description={"Total Recebido"}
               amount={formatNumberToMoney(userData.totalReceive)}
             />
           </Grid>

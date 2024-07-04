@@ -37,7 +37,7 @@ const ProfileInformation = ({
         toast.success('Usuário atualizado com sucesso!');
       })
     } else if (type === 'enterprise') {
-      EnterpriseAPI.patch(id, data).then((response) => {
+      EnterpriseAPI.patch(name, data).then((response) => {
         toast.success('Empresa atualizada com sucesso!');
       })
     }
