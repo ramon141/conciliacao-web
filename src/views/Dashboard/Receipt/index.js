@@ -1,7 +1,7 @@
 // Chakra imports
 import { Box, Flex, Grid, Icon } from "@chakra-ui/react";
 // Assets
-import React, {useEffect, useState} from "react";
+import React, { useEffect, useState } from "react";
 import { FaPaypal, FaWallet } from "react-icons/fa";
 import {
   invoicesData,
@@ -10,25 +10,25 @@ import {
 import Invoices from "./components/Invoices";
 import ReceiptRegister from "./components/ReceiptRegister";
 import PaymentStatistics from "./components/PaymentStatistics";
-import {ReceiptAPI} from "../../../api/Receipt";
+import { ReceiptAPI } from "../../../api/Receipt";
 
 function Receipt() {
 
-    const [receipts, setReceipts] = useState([]);
+  const [receipts, setReceipts] = useState([]);
 
-    useEffect(() => {
-        ReceiptAPI.get()
-            .then((response) => {
-                setReceipts(response.data);
-            });
-    }, []);
+  useEffect(() => {
+    ReceiptAPI.get()
+      .then((response) => {
+        setReceipts(response.data);
+      });
+  }, []);
 
-    const update = () => {
-        ReceiptAPI.get()
-            .then((response) => {
-                setReceipts(response.data);
-            });
-    }
+  const update = () => {
+    ReceiptAPI.get()
+      .then((response) => {
+        setReceipts(response.data);
+      });
+  }
 
 
   return (

@@ -3,37 +3,33 @@ import {
   Flex,
   FormControl,
   FormLabel,
-  Grid,
-  Icon,
-  Input,
+  Grid, Input,
   InputGroup,
-  InputLeftElement,
-  InputRightElement,
-  Select,
-  Spacer,
-  Stack, Switch,
+  InputLeftElement, Select, Stack, Switch,
   Text,
-  useColorModeValue,
+  useColorModeValue, useDisclosure
 } from "@chakra-ui/react";
 // Custom components
 import Card from "components/Card/Card.js";
 import CardBody from "components/Card/CardBody.js";
 import CardHeader from "components/Card/CardHeader.js";
-import { EnterpriseIcon } from "components/Icons/Icons";
 import { VerifyIcon } from "components/Icons/Icons";
 import { ProfileIcon } from "components/Icons/Icons";
 import { WalletIcon } from "components/Icons/Icons";
 import moment from "moment";
-import React, { useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import CPFCNPJ from "../../../../components/InputMaks/CPFCNPJ";
 import Money from "../../../../components/InputMaks/Money";
 import Phone from "../../../../components/InputMaks/Phone";
-import {TransactionsAPI} from "../../../../api/Transactions";
-import {ReceiptAPI} from "../../../../api/Receipt";
-import {toast} from "react-toastify";
-import {CashAPI} from "../../../../api/Cash";
+import { ReceiptAPI } from "../../../../api/Receipt";
+import { toast } from "react-toastify";
+import { CashAPI } from "../../../../api/Cash";
+import { EnterpriseReceiptAPI } from "api/EnterpriseReceipt";
+import ModalReceiptEnterprise from "./ModalReceiptEnterprise";
+import ReactSelect from 'react-select';
 
 const ReceiptRegister = ({ title, onUpdate }) => {
+  const { isOpen, onOpen, onClose } = useDisclosure();
   const iconTeal = useColorModeValue("teal.300", "teal.300");
   const textColor = useColorModeValue("gray.700", "white");
   const borderColor = useColorModeValue("#dee2e6", "gray.500");
@@ -42,11 +38,8 @@ const ReceiptRegister = ({ title, onUpdate }) => {
     "teal.300"
   );
 
-  const [name, setName] = useState('');
-  const [phone, setPhone] = useState('');
   const [typeReceipt, setTypeReceipt] = useState('product');
   const [date, setDate] = useState(moment().format('YYYY-MM-DD'))
-  const [cpfCnpj, setCpfCnpj] = useState('');
   const [money, setMoney] = useState('');
   const [registerTransaction, setRegisterTransaction] = useState(false);
   const [paymentMethod, setPaymentMethod] = useState('');
@@ -56,11 +49,18 @@ const ReceiptRegister = ({ title, onUpdate }) => {
   const [quantity, setQuantity] = useState('');
   const [description, setDescription] = useState('');
 
+  const [enterprisesReceipt, setEnterprisesReceipt] = useState([]);
+
+  const [selectedCompany, setSelectedCompany] = useState(null);
+
   const handleSubmit = async (e) => {
+    if (!selectedCompany || !selectedCompany?.name || !selectedCompany?.cnpj_cpf || !selectedCompany?.phone)
+      toast.error('Selecione uma empresa');
+
     try {
       let transaction = {};
 
-      if(registerTransaction) {
+      if (registerTransaction) {
         const dataTransaction = {
           value: parseFloat(money),
           payment_method: paymentMethod,
@@ -72,23 +72,24 @@ const ReceiptRegister = ({ title, onUpdate }) => {
       }
 
       const dataReceipt = {
-        name,
-        cpfcnpj: cpfCnpj.replace(/[^\d]+/g, ''),
-        phone: phone.replace(/[^\d]+/g, ''),
+        name: selectedCompany.name,
+        cpfcnpj: selectedCompany.cnpj_cpf.replace(/[^\d]+/g, ''),
+        phone: selectedCompany.phone.replace(/[^\d]+/g, ''),
         date: moment(date).toISOString(),
         payment_method: paymentMethod,
         type: typeReceipt,
         description,
         product,
-        quantity: quantity? parseFloat(quantity) : undefined,
+        quantity: quantity ? parseFloat(quantity) : undefined,
         total: parseFloat(money),
         transactionId: transaction.id
       };
 
-      const receipt = await ReceiptAPI.post(dataReceipt);
+      await ReceiptAPI.post(dataReceipt);
       toast.success('Cadastrado com sucesso!');
-      //clearFields();
-    } catch(e) {
+      clearFields();
+    } catch (e) {
+      console.log(e);
       toast.error('O sistema apresentou um erro desconhecido');
     }
 
@@ -96,11 +97,8 @@ const ReceiptRegister = ({ title, onUpdate }) => {
   }
 
   const clearFields = () => {
-    setName('');
-    setPhone('');
     setTypeReceipt('produto');
     setDate(moment().format('YYYY-MM-DD'));
-    setCpfCnpj('');
     setMoney('');
     setRegisterTransaction(false);
     setPaymentMethod('');
@@ -110,6 +108,20 @@ const ReceiptRegister = ({ title, onUpdate }) => {
     setDescription('');
   }
 
+  const loadEnterprise = useCallback(() => {
+    EnterpriseReceiptAPI.get().then((response) => {
+      setEnterprisesReceipt(response.data);
+    })
+  }, [setEnterprisesReceipt, EnterpriseReceiptAPI]);
+
+  const onCloseModal = () => {
+    onClose();
+    loadEnterprise();
+  }
+
+  useEffect(() => {
+    loadEnterprise();
+  }, [loadEnterprise]);
 
   return (
     <Card p='16px' mt='24px'>
@@ -118,6 +130,9 @@ const ReceiptRegister = ({ title, onUpdate }) => {
           <Text fontSize='lg' color={textColor} fontWeight='bold' marginBottom={10}>
             {title}
           </Text>
+          <Button onClick={onOpen} bg={bgButton} color='white'>
+            Adicionar Empresa
+          </Button>
         </Flex>
       </CardHeader>
       <CardBody>
@@ -154,27 +169,39 @@ const ReceiptRegister = ({ title, onUpdate }) => {
             }}
             gap='26px'
           >
-            <FormControl>
-              <FormLabel ms='4px' fontSize='sm' fontWeight='regular'>
-                Nome/Empresa
-              </FormLabel>
-              <Stack spacing={4} width={'100%'}>
-                <InputGroup>
-                  <InputLeftElement pointerEvents='none' marginTop={1}>
-                    <ProfileIcon color='green.300' />
-                  </InputLeftElement>
-                  <Input
-                      value={name}
-                      onChange={(e) => setName(e.target.value)}
-                      height={50}
-                      min="1"
-                      type="text"
-                      placeholder='Nome'
-                  />
-                </InputGroup>
-              </Stack>
+            <FormControl mb={4}>
+              <FormLabel>Empresa</FormLabel>
+              <ReactSelect
+                getOptionLabel={(option) => option.name}
+                getOptionValue={(option) => option.id}
+                className="basic-single"
+                styles={{
+                  container: (provided) => ({
+                    ...provided,
+                    height: 50,
+                    zIndex: 1000,
+                    textAlign: 'left'
+                  }),
+                  control: (provided) => ({
+                    ...provided,
+                    height: 50
+                  }),
+                  valueContainer: (provided) => ({
+                    ...provided,
+                    height: 50,
+                    display: 'flex',
+                    alignItems: 'center'
+                  }),
+                  singleValue: (provided) => ({
+                    ...provided,
+                    textAlign: 'left'
+                  }),
+                }}
+                options={enterprisesReceipt}
+                onChange={(selectedOption) => setSelectedCompany(selectedOption)}
+                placeholder="Selecione a Empresa"
+              />
             </FormControl>
-
 
             <FormControl>
               <FormLabel ms='4px' fontSize='sm' fontWeight='regular'>
@@ -182,10 +209,10 @@ const ReceiptRegister = ({ title, onUpdate }) => {
               </FormLabel>
               <Stack spacing={4} width={'100%'}>
                 <CPFCNPJ
-                    height={50}
-                    min="1"
-                    value={cpfCnpj}
-                    onChange={(e) => setCpfCnpj(e.target.value)}
+                  height={50}
+                  min="1"
+                  isDisabled={true}
+                  value={selectedCompany?.cnpj_cpf || ""}
                 />
               </Stack>
             </FormControl>
@@ -196,15 +223,13 @@ const ReceiptRegister = ({ title, onUpdate }) => {
               </FormLabel>
               <Stack spacing={4} width={'100%'}>
                 <Phone
-                    height={50}
-                    min="1"
-                    value={phone}
-                    onChange={(e) => setPhone(e.target.value)}
+                  height={50}
+                  min="1"
+                  value={selectedCompany?.phone || ""}
+                  isDisabled={true}
                 />
               </Stack>
             </FormControl>
-
-
           </Grid>
 
           <Flex
@@ -259,10 +284,10 @@ const ReceiptRegister = ({ title, onUpdate }) => {
                 Meio de Pagamento
               </FormLabel>
               <Select
-                  placeholder='Clique aqui para selecionar'
-                  height={50}
-                  value={paymentMethod}
-                  onChange={(e) => setPaymentMethod(e.target.value)}
+                placeholder='Clique aqui para selecionar'
+                height={50}
+                value={paymentMethod}
+                onChange={(e) => setPaymentMethod(e.target.value)}
               >
                 <option value='pix'>Pix</option>
                 <option value='especie'>Espécie</option>
@@ -274,10 +299,10 @@ const ReceiptRegister = ({ title, onUpdate }) => {
                 Tipo de Transferência
               </FormLabel>
               <Select
-                  placeholder='Clique aqui para selecionar'
-                  height={50}
-                  value={typeTransfer}
-                  onChange={(e) => setTypeTransfer(e.target.value)}
+                placeholder='Clique aqui para selecionar'
+                height={50}
+                value={typeTransfer}
+                onChange={(e) => setTypeTransfer(e.target.value)}
               >
                 <option value='output'>Pagando</option>
                 <option value='input'>Recebendo</option>
@@ -289,8 +314,8 @@ const ReceiptRegister = ({ title, onUpdate }) => {
                 Registrar como transação de caixa?
               </FormLabel>
               <Switch
-                  value={registerTransaction}
-                  onChange={(e) => setRegisterTransaction(e.target.checked)}
+                value={registerTransaction}
+                onChange={(e) => setRegisterTransaction(e.target.checked)}
               />
             </FormControl>
           </Grid>
@@ -346,12 +371,12 @@ const ReceiptRegister = ({ title, onUpdate }) => {
                         <ProfileIcon color='green.300' />
                       </InputLeftElement>
                       <Input
-                          height={50}
-                          min="1"
-                          type="text"
-                          placeholder='Produto'
-                          value={product}
-                          onChange={(e) => setProduct(e.target.value)}
+                        height={50}
+                        min="1"
+                        type="text"
+                        placeholder='Produto'
+                        value={product}
+                        onChange={(e) => setProduct(e.target.value)}
                       />
                     </InputGroup>
                   </Stack>
@@ -367,12 +392,12 @@ const ReceiptRegister = ({ title, onUpdate }) => {
                         <VerifyIcon color='green.300' />
                       </InputLeftElement>
                       <Input
-                          height={50}
-                          min="1"
-                          type="number"
-                          value={quantity}
-                          onChange={(e) => setQuantity(e.target.value)}
-                          placeholder='Quantidade'
+                        height={50}
+                        min="1"
+                        type="number"
+                        value={quantity}
+                        onChange={(e) => setQuantity(e.target.value)}
+                        placeholder='Quantidade'
                       />
                     </InputGroup>
                   </Stack>
@@ -389,12 +414,12 @@ const ReceiptRegister = ({ title, onUpdate }) => {
                       <ProfileIcon color='green.300' />
                     </InputLeftElement>
                     <Input
-                        height={50}
-                        min="1"
-                        type="text"
-                        value={description}
-                        onChange={(e) => setDescription(e.target.value)}
-                        placeholder='Descrição'
+                      height={50}
+                      min="1"
+                      type="text"
+                      value={description}
+                      onChange={(e) => setDescription(e.target.value)}
+                      placeholder='Descrição'
                     />
                   </InputGroup>
                 </Stack>
@@ -407,30 +432,29 @@ const ReceiptRegister = ({ title, onUpdate }) => {
               </FormLabel>
               <Stack spacing={4} width={'100%'}>
                 <Money
-                    height={50}
-                    min="1"
-                    value={money}
-                    onChange={(e) => setMoney(e.target.value)}
+                  height={50}
+                  min="1"
+                  value={money}
+                  onChange={(e) => setMoney(e.target.value)}
                 />
               </Stack>
             </FormControl>
           </Grid>
 
           <Flex
-              align='center'
-              w='100%'
-              justify='center'
-              wrap={'wrap'}
-              my={1}
+            align='center'
+            w='100%'
+            justify='center'
+            wrap={'wrap'}
+            my={1}
           >
             <Button height={50} bg={bgButton} color='white' fontSize='xs' variant='no-hover' onClick={handleSubmit}>
               EMITIR RECIBO
             </Button>
           </Flex>
-          </Flex>
+        </Flex>
 
-
-
+        <ModalReceiptEnterprise isOpen={isOpen} onClose={onCloseModal} />
       </CardBody>
     </Card>
   );
