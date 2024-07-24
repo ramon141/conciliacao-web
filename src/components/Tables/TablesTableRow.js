@@ -23,43 +23,42 @@ function TablesTableRow(props) {
   const bgStatus = useColorModeValue("red.400", "red.400");
   const walletIcon = useColorModeValue("green.400", "gray.200");
 
-  const balanceFormatted = Intl.NumberFormat('pt-BR', {
-    style: 'currency',
-    currency: 'BRL',
+  const balanceFormatted = Intl.NumberFormat("pt-BR", {
+    style: "currency",
+    currency: "BRL",
   }).format(Math.abs(balance));
 
   const handleEdit = () => {
-    const type = location.href.split('/').pop();
-    if (type === 'driver')
+    const type = location.href.split("/").pop();
+    if (type === "driver") history.push(`/admin/profile/${name}/${type}`);
+    else if (type === "enterprise")
       history.push(`/admin/profile/${name}/${type}`);
-    else if (type === 'enterprise')
-      history.push(`/admin/profile/${name}/${type}`);
-  }
+  };
 
   const createLinkWhats = () => {
-    const message =
-      `Olá ${name.trim()}, você ${balance > 0 ? 'deve pagar' : 'irá receber'}  ${balanceFormatted} referente ao sistema Juma.`;
+    const message = `Olá ${name.trim()}, você ${
+      balance > 0 ? "deve pagar" : "irá receber"
+    }  ${balanceFormatted} referente ao sistema Juma.`;
 
     const messageEncoded = window.encodeURIComponent(message);
 
     return `https://wa.me/55${phone}?text=${messageEncoded}`;
-  }
+  };
 
   const linkWhatsApp = createLinkWhats();
 
   const handleClickWhatsapp = (e) => {
     if (!phone) {
-      toast.error('Este usuário não tem o telefone cadastrado');
+      toast.error("Este usuário não tem o telefone cadastrado");
       e.preventDefault();
     }
-  }
+  };
 
   const handleWalletClick = () => {
-    if (type === 'driver')
-      history.push(`/admin/transaction/${name}/${type}`)
-    else if (type === 'enterprise')
-      history.push(`/admin/transaction/${name}/${type}`)
-  }
+    if (type === "driver") history.push(`/admin/transaction/${name}/${type}`);
+    else if (type === "enterprise")
+      history.push(`/admin/transaction/${name}/${type}`);
+  };
 
   return (
     <Tr>
@@ -74,7 +73,7 @@ function TablesTableRow(props) {
             >
               {name}
               <PenIcon
-                style={{ cursor: 'pointer', marginTop: -10 }}
+                style={{ cursor: "pointer", marginTop: -10 }}
                 color={walletIcon}
                 w="20px"
                 h="20px"
@@ -98,37 +97,40 @@ function TablesTableRow(props) {
       </Td>
       <Td>
         <Badge
-          bg={balance > 0 ? "green.400" : bgStatus}
+          bg={balance < 0 ? "green.400" : bgStatus}
           color={"white"}
           fontSize="16px"
           p="3px 10px"
           borderRadius="8px"
         >
-          {
-            balanceFormatted
-          }
+          {balanceFormatted}
         </Badge>
       </Td>
       <Td>
         <Text fontSize="md" color={textColor} fontWeight="bold" pb=".5rem">
-          {moment(createdAt).format('DD/MM/YYYY')}
+          {moment(createdAt).format("DD/MM/YYYY")}
         </Text>
       </Td>
-      <Td style={{ textAlign: 'center' }}>
-        <Button p="0px" bg="transparent" variant="no-hover" onClick={handleWalletClick}>
+      <Td style={{ textAlign: "center" }}>
+        <Button
+          p="0px"
+          bg="transparent"
+          variant="no-hover"
+          onClick={handleWalletClick}
+        >
           <Text
             fontSize="md"
             color="gray.400"
             fontWeight="bold"
             cursor="pointer"
-            style={{ textAlign: 'center' }}
+            style={{ textAlign: "center" }}
           >
             <WalletIcon color={walletIcon} w="40px" h="30px" me="40px" />
           </Text>
         </Button>
       </Td>
 
-      <Td style={{ textAlign: 'center' }}>
+      <Td style={{ textAlign: "center" }}>
         <Link
           p="0px"
           bg="transparent"
@@ -143,12 +145,7 @@ function TablesTableRow(props) {
             fontWeight="bold"
             cursor="pointer"
           >
-            <MessageIcon
-              color={walletIcon}
-              w="40px"
-              h="30px"
-              me="40px"
-            />
+            <MessageIcon color={walletIcon} w="40px" h="30px" me="40px" />
           </Text>
         </Link>
       </Td>
