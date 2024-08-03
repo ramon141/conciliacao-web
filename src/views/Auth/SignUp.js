@@ -30,7 +30,7 @@ function SignUp() {
 
   localStorage.clear();
 
-  const submit = () => {
+  const submit = (e) => {
     toast.promise(login({ email, password }), {
       pending: "Acessando...",
       success: "Logado com sucesso",
@@ -99,55 +99,53 @@ function SignUp() {
           >
             Entrar
           </Text>
-          <FormControl>
-            <FormLabel ms="4px" fontSize="sm" fontWeight="normal">
-              Email
-            </FormLabel>
-            <Input
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              fontSize="sm"
-              ms="4px"
-              borderRadius="15px"
-              type="email"
-              placeholder="Seu endereço de e-mail"
-              mb="24px"
-              size="lg"
-            />
-            <FormLabel ms="4px" fontSize="sm" fontWeight="normal">
-              Senha
-            </FormLabel>
-            <Input
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              fontSize="sm"
-              ms="4px"
-              borderRadius="15px"
-              type="password"
-              placeholder="Senha"
-              mb="24px"
-              size="lg"
-            />
-            <Button
-              onClick={submit}
-              type="submit"
-              bg="teal.300"
-              fontSize="10px"
-              color="white"
-              fontWeight="bold"
-              w="100%"
-              h="45"
-              mb="24px"
-              _hover={{
-                bg: "teal.200",
-              }}
-              _active={{
-                bg: "teal.400",
-              }}
-            >
-              ACESSAR
-            </Button>
-          </FormControl>
+          <FormLabel ms="4px" fontSize="sm" fontWeight="normal">
+            Email
+          </FormLabel>
+          <Input
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            fontSize="sm"
+            ms="4px"
+            borderRadius="15px"
+            type="email"
+            placeholder="Seu endereço de e-mail"
+            mb="24px"
+            size="lg"
+          />
+          <FormLabel ms="4px" fontSize="sm" fontWeight="normal">
+            Senha
+          </FormLabel>
+          <Input
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            fontSize="sm"
+            ms="4px"
+            borderRadius="15px"
+            type="password"
+            placeholder="Senha"
+            mb="24px"
+            size="lg"
+          />
+          <Button
+            onClick={submit}
+            type="submit"
+            bg="teal.300"
+            fontSize="10px"
+            color="white"
+            fontWeight="bold"
+            w="100%"
+            h="45"
+            mb="24px"
+            _hover={{
+              bg: "teal.200",
+            }}
+            _active={{
+              bg: "teal.400",
+            }}
+          >
+            ACESSAR
+          </Button>
         </Flex>
       </Flex>
     </Flex>

@@ -1,0 +1,9 @@
+services:
+  web:
+    restart: on-failure
+    build: .
+    environment:
+      REACT_APP_API_URL: ${REACT_APP_API_URL}
+      PUBLIC_URL: ${PUBLIC_URL}
+    ports:
+      - "${PORT}:8080"
