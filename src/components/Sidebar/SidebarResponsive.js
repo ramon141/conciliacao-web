@@ -14,7 +14,7 @@ import {
   Stack,
   Text,
   useColorModeValue,
-  useDisclosure
+  useDisclosure,
 } from "@chakra-ui/react";
 import IconBox from "components/Icons/IconBox";
 import { CreativeTimLogo } from "components/Icons/Icons";
@@ -191,7 +191,7 @@ function SidebarResponsive(props) {
   var brand = (
     <Box pt={"35px"} mb="8px">
       <Link
-        href={`${process.env.PUBLIC_URL}/#/`}
+        href={`/#/`}
         target="_blank"
         display="flex"
         lineHeight="100%"
@@ -263,4 +263,4 @@ function SidebarResponsive(props) {
   );
 }
 
-export default SidebarResponsive
+export default SidebarResponsive;

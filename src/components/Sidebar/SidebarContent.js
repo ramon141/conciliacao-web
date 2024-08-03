@@ -2,11 +2,12 @@
 // chakra imports
 import {
   Box,
-  Button, Flex,
+  Button,
+  Flex,
   Link,
   Stack,
   Text,
-  useColorModeValue
+  useColorModeValue,
 } from "@chakra-ui/react";
 import IconBox from "components/Icons/IconBox";
 import { CreativeTimLogo } from "components/Icons/Icons";
@@ -17,9 +18,7 @@ import { NavLink, useLocation } from "react-router-dom";
 
 // this function creates the links and collapses that appear in the sidebar (left menu)
 
-
 const SidebarContent = ({ logoText, routes }) => {
-
   // to check for active links and opened collapses
   let location = useLocation();
   // this is for the rest of the collapses
@@ -180,7 +179,7 @@ const SidebarContent = ({ logoText, routes }) => {
     <>
       <Box pt={"25px"} mb="12px">
         <Link
-          href={`${process.env.PUBLIC_URL}/#/`}
+          href={`/#/`}
           target="_blank"
           display="flex"
           lineHeight="100%"
@@ -201,7 +200,7 @@ const SidebarContent = ({ logoText, routes }) => {
         <Box>{links}</Box>
       </Stack>
     </>
-  )
-}
+  );
+};
 
-export default SidebarContent
+export default SidebarContent;
