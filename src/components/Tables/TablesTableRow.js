@@ -37,7 +37,7 @@ function TablesTableRow(props) {
 
   const createLinkWhats = () => {
     const message = `Olá ${name.trim()}, você ${
-      balance > 0 ? "deve pagar" : "irá receber"
+      balance < 0 ? "deve pagar" : "irá receber"
     }  ${balanceFormatted} referente ao sistema Juma.`;
 
     const messageEncoded = window.encodeURIComponent(message);
